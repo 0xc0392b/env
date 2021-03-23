@@ -50,9 +50,8 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
-(setq package-list '(treemacs multiple-cursors latex-preview-pane
-			      kaolin-themes haskell-mode go-mode git-gutter
-			      elm-mode auto-complete))
+(setq package-list '(treemacs multiple-cursors kaolin-themes haskell-mode
+			      go-mode git-gutter elm-mode auto-complete))
 
 ;; activate all packages
 (package-initialize)
@@ -70,9 +69,6 @@
 ;; --------------------------------------------------------------------------------
 ;; language-specific configurations
 
-
-;; preview LaTeX files
-(latex-preview-pane-enable)
 
 ;; auto go fmt on save golang buffers
 (add-hook 'before-save-hook 'gofmt-before-save)
@@ -102,8 +98,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(elm-mode multiple-cursors go-mode auto-complete latex-preview-pane
-	      git-gutter haskell-mode treemacs kaolin-themes)))
+   '(elm-mode multiple-cursors go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
