@@ -1,5 +1,5 @@
 ;; William's emacs config~
-;; last updated 7th March 2021
+;; last updated 31st March 2021
 
 
 ;; --------------------------------------------------------------------------------
@@ -50,8 +50,8 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
-(setq package-list '(treemacs multiple-cursors kaolin-themes haskell-mode
-			      go-mode git-gutter elm-mode auto-complete))
+(setq package-list '(treemacs multiple-cursors kaolin-themes haskell-mode go-mode
+			      git-gutter elm-mode auto-complete markdown-mode))
 
 ;; activate all packages
 (package-initialize)
@@ -98,7 +98,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(elm-mode multiple-cursors go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
+   '(markdown-mode elm-mode multiple-cursors go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
