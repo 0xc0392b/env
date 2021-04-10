@@ -13,7 +13,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; open scratch file on startup (this should already exist)
-(find-file "scratch.md")
+(find-file "~/.scratch.md")
 
 ;; 80 character margin in code buffers
 ;; TODO
@@ -38,7 +38,6 @@
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
-(global-set-key (kbd "C-c m c") 'mc/edit-lines)  ; multiple cursors
 
 
 ;; --------------------------------------------------------------------------------
@@ -50,7 +49,7 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
-(setq package-list '(treemacs multiple-cursors kaolin-themes haskell-mode go-mode
+(setq package-list '(treemacs kaolin-themes haskell-mode go-mode
 			      git-gutter elm-mode auto-complete markdown-mode))
 
 ;; activate all packages
@@ -98,7 +97,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(markdown-mode elm-mode multiple-cursors go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
+   '(markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
