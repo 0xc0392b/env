@@ -1,5 +1,5 @@
 ;; William's emacs config~
-;; last updated 31st March 2021
+;; last updated 16th July 2021
 
 
 ;; --------------------------------------------------------------------------------
@@ -33,7 +33,7 @@
 
 ;; load theme
 (require 'kaolin-themes)
-(load-theme 'kaolin-eclipse t)
+(load-theme 'kaolin-dark t)
 
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
@@ -69,18 +69,8 @@
 ;; language-specific configurations
 
 
-;; auto go fmt on save golang buffers
+;; auto go fmt when saving golang buffers
 (add-hook 'before-save-hook 'gofmt-before-save)
-
-;; SLE project: syntax highlighting for ART eSOS rules and mux DSL
-;; note: this is temporary
-;; note: you will need to make sure the path below 1. exists and 2. contains the two
-;;       following .el scripts
-(add-to-list 'load-path "~/Documents/RHUL/rhul-year-3/Term 2/Software Language Engineering/Project")
-(load "esos-mode.el")
-(load "mux-mode.el")
-(add-to-list 'auto-mode-alist '("\\.esos\\'" . esos-mode))
-(add-to-list 'auto-mode-alist '("\\.mux\\'" . mux-mode))
 
 
 ;; --------------------------------------------------------------------------------
