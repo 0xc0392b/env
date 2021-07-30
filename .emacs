@@ -72,6 +72,9 @@
 ;; auto go fmt when saving golang buffers
 (add-hook 'before-save-hook 'gofmt-before-save)
 
+;; auto elm-format when saving elm buffers (requires npm i -g elm-format)
+(add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+
 
 ;; --------------------------------------------------------------------------------
 ;; Misc
