@@ -15,9 +15,6 @@
 ;; open scratch file on startup (this should already exist)
 (find-file "~/.scratch.md")
 
-;; 80 character margin in code buffers
-;; TODO
-
 ;; always show line numbers and git gutter
 (global-display-line-numbers-mode)
 (global-git-gutter-mode 1)
