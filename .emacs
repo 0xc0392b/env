@@ -1,9 +1,9 @@
-;; William's emacs config~
-;; last updated 16th July 2021
+;; william's emacs config~
+;; last updated 18th August 2021
 
 
 ;; --------------------------------------------------------------------------------
-;; Interface
+;; interface
 
 
 ;; don't show default startup screen
@@ -38,10 +38,12 @@
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
+(when (fboundp 'windmove-default-keybindings)    ; move point from window to window using meta + arrow keys
+  (windmove-default-keybindings 'meta))
 
 
 ;; --------------------------------------------------------------------------------
-;; Package management
+;; package management
 
 
 ;; MELPA repository
@@ -77,7 +79,7 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; Misc
+;; misc
 
 
 ;; auto generated
