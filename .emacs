@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 18th August 2021
+;; last updated 1st October 2021
 
 
 ;; --------------------------------------------------------------------------------
@@ -48,7 +48,7 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
-(setq package-list '(treemacs kaolin-themes haskell-mode go-mode
+(setq package-list '(treemacs kaolin-themes haskell-mode elixir-mode go-mode
 			      git-gutter elm-mode auto-complete markdown-mode))
 
 ;; activate all packages
@@ -74,10 +74,24 @@
 ;; auto elm-format when saving elm buffers (requires npm i -g elm-format)
 (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
 
+;; auto elixir-format when saving elixir buffers
+(add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+
 
 ;; --------------------------------------------------------------------------------
 ;; misc
 
+
+;; irc server
+(setq circe-network-options
+      '(("timov.live"
+         :tls t
+	 :host "irc.wsantos.net"
+	 :port 6697
+         :nick "w"
+         :channels ("#general")
+         )))
 
 ;; auto generated
 (custom-set-variables
@@ -89,7 +103,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
+   '(elixir-mode circe circleci-api markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
