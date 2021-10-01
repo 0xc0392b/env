@@ -83,16 +83,6 @@
 ;; misc
 
 
-;; irc server
-(setq circe-network-options
-      '(("timov.live"
-         :tls t
-	 :host "irc.wsantos.net"
-	 :port 6697
-         :nick "w"
-         :channels ("#general")
-         )))
-
 ;; auto generated
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
