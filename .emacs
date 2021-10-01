@@ -93,7 +93,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(elixir-mode circe circleci-api markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
+   '(elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
