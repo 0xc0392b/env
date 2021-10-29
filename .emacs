@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 1st October 2021
+;; last updated 29th October 2021
 
 
 ;; --------------------------------------------------------------------------------
@@ -30,7 +30,7 @@
 
 ;; load theme
 (require 'kaolin-themes)
-(load-theme 'kaolin-dark t)
+(load-theme 'kaolin-bubblegum t)
 
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
