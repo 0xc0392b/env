@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 29th October 2021
+;; last updated 30th October 2021
 
 
 ;; --------------------------------------------------------------------------------
@@ -22,6 +22,9 @@
 ;; hide toolbars
 (menu-bar-mode 0)
 (tool-bar-mode 0)
+
+;; hide scrollbars
+(toggle-scroll-bar 0)
 
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
