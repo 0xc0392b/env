@@ -88,11 +88,12 @@
 	     (setq doom-themes-enable-bold t
 		   doom-themes-enable-italic t)
 
-	     (load-theme 'doom-outrun-electric t))
+	     (load-theme 'doom-moonlight t))
 
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
+(global-set-key (kbd "C-1") 'flyspell-mode)      ; toggle spelling checker with C-1
 (when (fboundp 'windmove-default-keybindings)    ; move point from window to window
   (windmove-default-keybindings 'meta))          ;   using meta + arrow keys
 
