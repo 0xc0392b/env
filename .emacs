@@ -1,5 +1,34 @@
 ;; william's emacs config~
-;; last updated 30th October 2021
+;; last updated 28th november 2021
+
+
+;; --------------------------------------------------------------------------------
+;; package management
+
+
+;; MELPA repository
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; list of packages i use
+(setq package-list '(treemacs use-package doom-themes git-gutter auto-complete
+			      haskell-mode elixir-mode go-mode ess elm-mode
+			      markdown-mode))
+
+;; activate all packages
+(package-initialize)
+
+;; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; install missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;; enable use-package
+(require 'use-package)
 
 
 ;; --------------------------------------------------------------------------------
@@ -31,40 +60,41 @@
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
 (set-frame-font "Inconsolata")
 
-;; load theme
-(require 'kaolin-themes)
-(load-theme 'kaolin-bubblegum t)
+;; load and configure global theme
+;;
+;; list of dark and light themes i like from the doom-themes package:
+;;
+;; dark:
+;; - doom-acario-dark
+;; - doom-challenger-deep
+;; - doom-horizon
+;; - doom-laserwave
+;; - doom-manegarm
+;; - doom-moonlight
+;; - doom-nord
+;; - doom-oceanic-next
+;; - doom-outrun-electric
+;; - doom-solarized-dark
+;; - doom-sourcerer
+;;
+;; light:
+;; - doom-nord-light
+;; - doom-solarized-light
+;; - doom-tomorrow-day
+(use-package doom-themes
+	     :ensure t
+	     :config
+
+	     (setq doom-themes-enable-bold t
+		   doom-themes-enable-italic t)
+
+	     (load-theme 'doom-outrun-electric t))
 
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
-(when (fboundp 'windmove-default-keybindings)    ; move point from window to window using meta + arrow keys
-  (windmove-default-keybindings 'meta))
-
-
-;; --------------------------------------------------------------------------------
-;; package management
-
-
-;; MELPA repository
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-;; list of packages i use
-(setq package-list '(treemacs kaolin-themes haskell-mode elixir-mode go-mode
-			      git-gutter elm-mode auto-complete markdown-mode))
-
-;; activate all packages
-(package-initialize)
-
-;; fetch the list of packages available 
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; install missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+(when (fboundp 'windmove-default-keybindings)    ; move point from window to window
+  (windmove-default-keybindings 'meta))          ;   using meta + arrow keys
 
 
 ;; --------------------------------------------------------------------------------
@@ -83,6 +113,13 @@
 
 
 ;; --------------------------------------------------------------------------------
+;; email
+
+
+;; TODO
+
+
+;; --------------------------------------------------------------------------------
 ;; misc
 
 
@@ -96,7 +133,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs kaolin-themes)))
+   '(doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
