@@ -1,5 +1,10 @@
 ;; william's emacs config~
-;; last updated 28th november 2021
+;; last updated 22nd january 2022
+
+
+;; TODO
+;; - convert this file to .org
+;; - add email client
 
 
 ;; --------------------------------------------------------------------------------
@@ -40,9 +45,6 @@
 
 ;; turn off system bell
 (setq ring-bell-function 'ignore)
-
-;; open scratch file on startup (this should already exist)
-(find-file "~/.scratch.md")
 
 ;; always show line numbers and git gutter
 (global-display-line-numbers-mode)
@@ -88,12 +90,18 @@
 	     (setq doom-themes-enable-bold t
 		   doom-themes-enable-italic t)
 
-	     (load-theme 'doom-moonlight t))
+	     (load-theme 'doom-acario-dark t))
 
 ;; custom key bindings
 (global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
 (global-set-key (kbd "C-1") 'flyspell-mode)      ; toggle spelling checker with C-1
+(global-set-key (kbd "C-x C-b") 'buffer-menu)    ; buffer-menu instead of list-buffers
+
+(global-set-key (kbd "C-c l") 'org-store-link)   ; org-mode stuff 
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+
 (when (fboundp 'windmove-default-keybindings)    ; move point from window to window
   (windmove-default-keybindings 'meta))          ;   using meta + arrow keys
 
