@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 22nd january 2022
+;; last updated 26th january 2022
 
 
 ;; TODO
@@ -50,6 +50,10 @@
 (global-display-line-numbers-mode)
 (global-git-gutter-mode 1)
 
+;; display time globally
+(setq display-time-format "%a %d %b %I:%M%p")
+(display-time-mode 1)
+
 ;; hide toolbars
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -60,7 +64,7 @@
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
-(set-frame-font "Inconsolata")
+;; (set-frame-font "Inconsolata")
 
 ;; load and configure global theme
 ;;
