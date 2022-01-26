@@ -46,13 +46,16 @@
 ;; turn off system bell
 (setq ring-bell-function 'ignore)
 
-;; always show line numbers and git gutter
-(global-display-line-numbers-mode)
-(global-git-gutter-mode 1)
-
 ;; display time globally
 (setq display-time-format "%a %d %b %I:%M%p")
 (display-time-mode 1)
+
+;; set treemacs mode line name
+(setq treemacs-user-mode-line-format " william ")
+
+;; always show line numbers and git gutter
+(global-display-line-numbers-mode)
+(global-git-gutter-mode 1)
 
 ;; hide toolbars
 (menu-bar-mode 0)
@@ -66,9 +69,9 @@
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
 ;; (set-frame-font "Inconsolata")
 
-;; load and configure global theme
-;;
-;; list of dark and light themes i like from the doom-themes package:
+;; load and configure global theme.
+;; you should always restart emacs after changing this. eval-buffer is not enough.
+;; i don't actually know why.
 ;;
 ;; dark:
 ;; - doom-acario-dark
