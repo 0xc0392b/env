@@ -1,10 +1,57 @@
 ;; william's emacs config~
-;; last updated 26th january 2022
+;; last updated 28th january 2022
 
 
 ;; TODO
 ;; - convert this file to .org
 ;; - add email client
+
+
+;; --------------------------------------------------------------------------------
+;; misc
+
+
+;; me
+(setq user-full-name "William Santos"
+      user-mail-address "w@wsantos.net")
+
+;; calendar
+(setq calendar-week-start-day 1)
+(setq display-time-format "%a %d %b %I:%M%p")
+
+;; warn when opening files > 100MB
+(setq large-file-warning-threshold 100000000)
+
+;; automatically refresh buffers when file changes on disk
+(global-auto-revert-mode t)
+
+;; encoding
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+
+;; --------------------------------------------------------------------------------
+;; functions
+
+
+;; drag current line up and down
+;; from https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
 
 
 ;; --------------------------------------------------------------------------------
@@ -20,10 +67,9 @@
 			      haskell-mode elixir-mode go-mode ess elm-mode
 			      markdown-mode))
 
-;; activate all packages
+;; activate all packages and then
+;; fetch the list of packages available
 (package-initialize)
-
-;; fetch the list of packages available 
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -40,34 +86,53 @@
 ;; interface
 
 
-;; don't show default startup screen
-(setq inhibit-startup-screen t)
-
 ;; turn off system bell
 (setq ring-bell-function 'ignore)
 
-;; display time globally
-(setq display-time-format "%a %d %b %I:%M%p")
-(display-time-mode 1)
+;; quit even if processes are running
+(setq confirm-kill-processes nil)
 
-;; set treemacs mode line name
+;; don't show default startup screen
+(setq inhibit-startup-screen t)
+
+;; set treemacs mode line
 (setq treemacs-user-mode-line-format " william ")
+
+;; smoother scrolling
+;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode t))
+
+;; don't blink cursor
+;; display time globally
+(blink-cursor-mode -1)
+(display-time-mode 1)
 
 ;; always show line numbers and git gutter
 (global-display-line-numbers-mode)
 (global-git-gutter-mode 1)
 
-;; hide toolbars
+;; hide toolbars and scrollbars
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-
-;; hide scrollbars
 (toggle-scroll-bar 0)
+
+;; configure mode line
+(line-number-mode t)
+(column-number-mode t)
+(size-indication-mode t)
+
+;; highlight parenthesis
+(use-package paren :config (show-paren-mode +1))
 
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
-;; (set-frame-font "Inconsolata")
+(set-frame-font "Inconsolata")
 
 ;; load and configure global theme.
 ;; you should always restart emacs after changing this. eval-buffer is not enough.
@@ -100,17 +165,24 @@
 	     (load-theme 'doom-acario-dark t))
 
 ;; custom key bindings
-(global-set-key (kbd "C-\\") 'treemacs)          ; toggle treemacs with C-\
-(global-set-key (kbd "C-`") 'auto-complete-mode) ; toggle auto-complete with C-`
-(global-set-key (kbd "C-1") 'flyspell-mode)      ; toggle spelling checker with C-1
-(global-set-key (kbd "C-x C-b") 'buffer-menu)    ; buffer-menu instead of list-buffers
+(global-set-key (kbd "C-\\") 'treemacs)           ; toggle treemacs with C-\
+(global-set-key (kbd "C-`") 'auto-complete-mode)  ; toggle auto-complete with C-`
+(global-set-key (kbd "C-1") 'flyspell-mode)       ; toggle spelling checker with C-1
+(global-set-key (kbd "C-x C-b") 'buffer-menu)     ; buffer-menu instead of list-buffers
+                                                  ;
+(global-set-key (kbd "C-S-<up>")                  ;
+		'move-line-up)                    ;
+                                                  ; dragging lines up/down
+(global-set-key (kbd "C-S-<down>")                ;
+		'move-line-down)                  ;
+                                                  ;
+(global-set-key (kbd "C-c l") 'org-store-link)    ;
+(global-set-key (kbd "C-c a") 'org-agenda)        ; org-mode stuff 
+(global-set-key (kbd "C-c c") 'org-capture)       ;
 
-(global-set-key (kbd "C-c l") 'org-store-link)   ; org-mode stuff 
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
-
-(when (fboundp 'windmove-default-keybindings)    ; move point from window to window
-  (windmove-default-keybindings 'meta))          ;   using meta + arrow keys
+;; navigating between windows
+(when (fboundp 'windmove-default-keybindings)     ; move point from window to window
+  (windmove-default-keybindings 'meta))           ; using meta + arrow keys
 
 
 ;; --------------------------------------------------------------------------------
@@ -136,10 +208,9 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; misc
-
-
 ;; auto generated
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
