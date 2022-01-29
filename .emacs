@@ -100,11 +100,6 @@
 ;; set treemacs mode line
 (setq treemacs-user-mode-line-format " william ")
 
-;; save and restore sessions
-(setq desktop-path '("~/org/emacs/sessions/"))
-
-(desktop-save-mode)
-
 ;; smooth scrolling
 ;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 (setq scroll-margin 0
@@ -113,6 +108,12 @@
 
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
+
+;; session store
+(setq desktop-path '("~/org/emacs/sessions/"))
+
+;; save and restore sessions
+(desktop-save-mode)
 
 ;; don't blink cursor
 ;; display time globally
@@ -172,20 +173,17 @@
 	     (load-theme 'doom-acario-dark t))
 
 ;; custom key bindings
-(global-set-key (kbd "C-\\") 'treemacs)           ; toggle treemacs with C-\
-(global-set-key (kbd "C-`") 'auto-complete-mode)  ; toggle auto-complete with C-`
-(global-set-key (kbd "C-1") 'flyspell-mode)       ; toggle spelling checker with C-1
-(global-set-key (kbd "C-x C-b") 'buffer-menu)     ; buffer-menu instead of list-buffers
-                                                  ;
-(global-set-key (kbd "C-S-<up>")                  ;
-		'move-line-up)                    ;
-                                                  ; dragging lines up/down
-(global-set-key (kbd "C-S-<down>")                ;
-		'move-line-down)                  ;
-                                                  ;
-(global-set-key (kbd "C-c l") 'org-store-link)    ;
-(global-set-key (kbd "C-c a") 'org-agenda)        ; org-mode stuff 
-(global-set-key (kbd "C-c c") 'org-capture)       ;
+(global-set-key (kbd "C-\\") 'treemacs)             ; toggle treemacs with C-\
+(global-set-key (kbd "C-`") 'auto-complete-mode)    ; toggle auto-complete with C-`
+(global-set-key (kbd "C-1") 'flyspell-mode)         ; toggle spelling checker with C-1
+(global-set-key (kbd "C-x C-b") 'buffer-menu)       ; buffer-menu instead of list-buffers
+                                                    ;
+(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up/down
+(global-set-key (kbd "C-S-<down>") 'move-line-down) ;
+                                                    ;
+(global-set-key (kbd "C-c l") 'org-store-link)      ;
+(global-set-key (kbd "C-c a") 'org-agenda)          ; org-mode stuff 
+(global-set-key (kbd "C-c c") 'org-capture)         ;
 
 ;; navigating between windows
 (when (fboundp 'windmove-default-keybindings)     ; move point from window to window
