@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 28th january 2022
+;; last updated 29th january 2022
 
 
 ;; TODO
@@ -10,6 +10,12 @@
 ;; --------------------------------------------------------------------------------
 ;; misc
 
+
+;; encoding
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 
 ;; me
 (setq user-full-name "William Santos"
@@ -24,12 +30,6 @@
 
 ;; automatically refresh buffers when file changes on disk
 (global-auto-revert-mode t)
-
-;; encoding
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 
 
 ;; --------------------------------------------------------------------------------
@@ -63,17 +63,19 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
-(setq package-list '(treemacs use-package doom-themes git-gutter auto-complete
-			      haskell-mode elixir-mode go-mode ess elm-mode
-			      markdown-mode))
+(setq package-list
+      '(treemacs use-package doom-themes git-gutter auto-complete
+		 haskell-mode elixir-mode go-mode ess elm-mode
+		 markdown-mode))
 
-;; activate all packages and then
-;; fetch the list of packages available
+;; 1. activate all packages
+;; 2. fetch the list of packages available
+;; 3. install missing packages
 (package-initialize)
+
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; install missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
@@ -98,7 +100,12 @@
 ;; set treemacs mode line
 (setq treemacs-user-mode-line-format " william ")
 
-;; smoother scrolling
+;; save and restore sessions
+(setq desktop-path '("~/org/emacs/sessions/"))
+
+(desktop-save-mode)
+
+;; smooth scrolling
 ;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 (setq scroll-margin 0
       scroll-conservatively 100000
