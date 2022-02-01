@@ -1,10 +1,5 @@
 ;; william's emacs config~
-;; last updated 29th january 2022
-
-
-;; TODO
-;; - convert this file to .org
-;; - add email client
+;; last updated 1st february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -66,7 +61,7 @@
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode))
+		 markdown-mode magit))
 
 ;; 1. activate all packages
 ;; 2. fetch the list of packages available
@@ -225,10 +220,12 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
