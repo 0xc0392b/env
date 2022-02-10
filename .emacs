@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 1st february 2022.
+;; last updated 10th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -66,6 +66,7 @@
 ;; 1. activate all packages
 ;; 2. fetch the list of packages available
 ;; 3. install missing packages
+;; 4. enable use-package
 (package-initialize)
 
 (unless package-archive-contents
@@ -75,7 +76,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;; enable use-package
 (require 'use-package)
 
 
@@ -93,7 +93,7 @@
 (setq inhibit-startup-screen t)
 
 ;; set treemacs mode line
-(setq treemacs-user-mode-line-format " william ")
+(setq treemacs-user-mode-line-format " william's emacs ")
 
 ;; smooth scrolling
 ;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
@@ -156,6 +156,7 @@
 ;;
 ;; light:
 ;; - doom-nord-light
+;; - doom-acario-light
 ;; - doom-solarized-light
 ;; - doom-tomorrow-day
 (use-package doom-themes
