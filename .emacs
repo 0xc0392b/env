@@ -16,6 +16,8 @@
 (setq user-full-name "William Santos"
       user-mail-address "w@wsantos.net")
 
+(setq org-roam-directory "~/org")
+
 ;; calendar
 (setq calendar-week-start-day 1)
 (setq display-time-format "%a %d %b %I:%M%p")
@@ -23,8 +25,9 @@
 ;; warn when opening files > 100MB
 (setq large-file-warning-threshold 100000000)
 
-;; automatically refresh buffers when file changes on disk
+;; automatically refresh buffers/org-roam cache when file changes on disk
 (global-auto-revert-mode t)
+(org-roam-db-autosync-mode)
 
 
 ;; --------------------------------------------------------------------------------
@@ -104,10 +107,9 @@
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
 
-;; session store
+;; save and restore sessions automatically
 (setq desktop-path '("~/org/emacs/sessions/"))
 
-;; save and restore sessions
 (desktop-save-mode)
 
 ;; don't blink cursor
