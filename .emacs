@@ -1,5 +1,35 @@
 ;; william's emacs config~
-;; last updated 11th february 2022.
+;; last updated 16th february 2022.
+
+
+;; --------------------------------------------------------------------------------
+;; package management
+
+
+;; MELPA repository
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; list of packages i use
+(setq package-list
+      '(treemacs use-package doom-themes git-gutter auto-complete
+		 haskell-mode elixir-mode go-mode ess elm-mode
+		 markdown-mode magit org-roam verb))
+
+;; 1. activate all packages
+;; 2. fetch the list of packages available
+;; 3. install missing packages
+;; 4. enable use-package
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+(require 'use-package)
 
 
 ;; --------------------------------------------------------------------------------
@@ -16,8 +46,6 @@
 (setq user-full-name "William Santos"
       user-mail-address "w@wsantos.net")
 
-(setq org-roam-directory "~/org")
-
 ;; calendar
 (setq calendar-week-start-day 1)
 (setq display-time-format "%a %d %b %I:%M%p")
@@ -27,11 +55,17 @@
 
 ;; automatically refresh buffers/org-roam cache when file changes on disk
 (global-auto-revert-mode t)
-(org-roam-db-autosync-mode)
+
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-directory "~/org")
+  :config
+  (org-roam-db-autosync-mode))
 
 
 ;; --------------------------------------------------------------------------------
-;; functions
+;; my functions
 
 
 ;; drag current line up and down
@@ -53,36 +87,6 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; package management
-
-
-;; MELPA repository
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-;; list of packages i use
-(setq package-list
-      '(treemacs use-package doom-themes git-gutter auto-complete
-		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode magit org-roam))
-
-;; 1. activate all packages
-;; 2. fetch the list of packages available
-;; 3. install missing packages
-;; 4. enable use-package
-(package-initialize)
-
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
-
-(require 'use-package)
-
-
-;; --------------------------------------------------------------------------------
 ;; interface
 
 
@@ -95,9 +99,6 @@
 ;; don't show default startup screen
 (setq inhibit-startup-screen t)
 
-;; set treemacs mode line
-(setq treemacs-user-mode-line-format " william's emacs ")
-
 ;; smooth scrolling
 ;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 (setq scroll-margin 0
@@ -106,6 +107,13 @@
 
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
+
+;; treemacs
+(use-package treemacs
+  :ensure t
+  :init
+  (global-set-key (kbd "C-\\") 'treemacs)
+  (setq treemacs-user-mode-line-format " william's emacs "))
 
 ;; save and restore sessions automatically
 (setq desktop-path '("~/org/emacs/sessions/"))
@@ -119,7 +127,11 @@
 
 ;; always show line numbers and git gutter
 (global-display-line-numbers-mode)
-(global-git-gutter-mode 1)
+
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode 1))
 
 ;; hide toolbars and scrollbars
 (menu-bar-mode 0)
@@ -132,7 +144,9 @@
 (size-indication-mode t)
 
 ;; highlight parenthesis
-(use-package paren :config (show-paren-mode +1))
+(use-package paren
+  :config
+  (show-paren-mode +1))
 
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
@@ -162,26 +176,18 @@
 ;; - doom-solarized-light
 ;; - doom-tomorrow-day
 (use-package doom-themes
-	     :ensure t
-	     :config
-
-	     (setq doom-themes-enable-bold t
-		   doom-themes-enable-italic t)
-
-	     (load-theme 'doom-acario-dark t))
+  :ensure t
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-acario-dark t))
 
 ;; custom key bindings
-(global-set-key (kbd "C-\\") 'treemacs)             ; toggle treemacs with C-\
 (global-set-key (kbd "C-`") 'auto-complete-mode)    ; toggle auto-complete with C-`
 (global-set-key (kbd "C-1") 'flyspell-mode)         ; toggle spelling checker with C-1
 (global-set-key (kbd "C-x C-b") 'buffer-menu)       ; buffer-menu instead of list-buffers
-                                                    ;
-(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up/down
-(global-set-key (kbd "C-S-<down>") 'move-line-down) ;
-                                                    ;
-(global-set-key (kbd "C-c l") 'org-store-link)      ;
-(global-set-key (kbd "C-c a") 'org-agenda)          ; org-mode stuff 
-(global-set-key (kbd "C-c c") 'org-capture)         ;
+(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up
+(global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
 
 ;; navigating between windows
 (when (fboundp 'windmove-default-keybindings)     ; move point from window to window
@@ -192,15 +198,36 @@
 ;; language-specific configurations
 
 
+;; org-mode stuff
+(use-package org
+  :ensure t
+  :mode
+  ("\\.org\\'" . org-mode)
+  :config
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture))
+
 ;; auto go fmt when saving golang buffers
-(add-hook 'before-save-hook 'gofmt-before-save)
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; auto elm-format when saving elm buffers (requires npm i -g elm-format)
-(add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+(use-package elm-mode
+  :ensure t
+  :config
+  (add-hook 'elm-mode-hook 'elm-format-on-save-mode))
 
 ;; auto elixir-format when saving elixir buffers
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+(use-package elixir-mode
+  :ensure t
+  :config
+  (add-hook
+   'elixir-mode-hook (lambda () (add-hook 'before-save-hook
+					  'elixir-format nil t))))
 
 
 ;; --------------------------------------------------------------------------------
@@ -223,7 +250,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
