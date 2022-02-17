@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 16th february 2022.
+;; last updated 17th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode magit org-roam verb))
+		 markdown-mode magit org-roam verb ein))
 
 ;; 1. activate all packages
 ;; 2. fetch the list of packages available
@@ -250,7 +250,7 @@
  '(git-gutter:deleted-sign "rr")
  '(git-gutter:modified-sign "mm")
  '(package-selected-packages
-   '(verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
