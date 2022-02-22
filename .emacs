@@ -53,9 +53,6 @@
 ;; warn when opening files > 100MB
 (setq large-file-warning-threshold 100000000)
 
-;; exporting org-mode to PDF using latexmk
-(setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
-
 ;; automatically refresh buffers/org-roam cache when file changes on disk
 (global-auto-revert-mode t)
 
@@ -207,6 +204,7 @@
   :mode
   ("\\.org\\'" . org-mode)
   :config
+  (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
   (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key (kbd "C-c a") 'org-agenda)
