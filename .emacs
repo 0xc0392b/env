@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 17th february 2022.
+;; last updated 22nd february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -52,6 +52,9 @@
 
 ;; warn when opening files > 100MB
 (setq large-file-warning-threshold 100000000)
+
+;; exporting org-mode to PDF using latexmk
+(setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
 
 ;; automatically refresh buffers/org-roam cache when file changes on disk
 (global-auto-revert-mode t)
