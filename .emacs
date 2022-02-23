@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 22nd february 2022.
+;; last updated 23rd february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -190,8 +190,8 @@
 (global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
 
 ;; navigating between windows
-(when (fboundp 'windmove-default-keybindings)     ; move point from window to window
-  (windmove-default-keybindings 'meta))           ; using meta + arrow keys
+(when (fboundp 'windmove-default-keybindings)       ; move point from window to window
+  (windmove-default-keybindings 'super))            ; using super + arrow keys
 
 
 ;; --------------------------------------------------------------------------------
