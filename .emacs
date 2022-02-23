@@ -189,10 +189,9 @@
 (global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up
 (global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
 
-;; navigating between windows
+;; navigating between multiple windows
 (when (fboundp 'windmove-default-keybindings)       ; move point from window to window
-  (windmove-default-keybindings 'super))            ; using super + arrow keys
-
+  (windmove-default-keybindings 'meta))             ; using meta + arrow keys
 
 ;; --------------------------------------------------------------------------------
 ;; language-specific configurations
