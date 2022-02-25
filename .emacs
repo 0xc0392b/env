@@ -247,24 +247,17 @@
 ;; public IRC servers i use
 
 
-;; channels to automatically join
-(require 'erc-join)
-(erc-autojoin-mode 1)
-(setq erc-autojoin-channels-alist
-          '(("libera.chat" "#emacs")
-            ("freenode.net" "#emacs")))
-
 ;; libera
-(defun irc-libera ()
-  (lambda ()
-    (erc :server "irc.libera.chat"
-	 :port   "6697")))
+(defun irc-connect-to-libera ()
+  (interactive)
+  (erc-tls :server "irc.libera.chat"
+	   :port   "6697"))
 
 ;; freenode
-(defun irc-freenode ()
-  (lambda ()
-    (erc :server "chat.freenode.net"
-	 :port   "6667")))
+(defun irc-connect-to-freenode ()
+  (interactive)
+  (erc-tls :server "chat.freenode.net"
+	   :port   "6697"))
 
 
 ;; --------------------------------------------------------------------------------
