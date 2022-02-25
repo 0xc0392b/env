@@ -241,8 +241,13 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; public IRC servers i use
+;; IRC
 
+
+;; configure ERC client
+(setq
+ erc-kill-buffer-on-part t
+ erc-prompt (lambda () (concat ":" (buffer-name) ">")))
 
 ;; libera
 (defun irc-connect-to-libera ()
