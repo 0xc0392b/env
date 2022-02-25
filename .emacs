@@ -41,7 +41,6 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-
 (setq erc-server-coding-system '(utf-8 . utf-8))
 
 ;; me
@@ -255,6 +254,12 @@
 (defun irc-connect-to-freenode ()
   (interactive)
   (erc-tls :server "chat.freenode.net"
+	   :port   "6697"))
+
+;; timov
+(defun irc-connect-to-timov ()
+  (interactive)
+  (erc-tls :server "timov.live"
 	   :port   "6697"))
 
 
