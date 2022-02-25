@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 23rd february 2022.
+;; last updated 24th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -194,7 +194,7 @@
   (windmove-default-keybindings 'meta))             ; using meta + arrow keys
 
 ;; --------------------------------------------------------------------------------
-;; language-specific configurations
+;; language and version control configurations
 
 
 ;; org-mode stuff
@@ -208,6 +208,13 @@
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture))
+
+;; auth refresh magit buffers when repo changes
+(use-package magit
+  :ensure t
+  :config
+  (with-eval-after-load 'magit-mode
+    (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
 
 ;; auto go fmt when saving golang buffers
 (use-package go-mode
