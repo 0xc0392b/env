@@ -193,6 +193,7 @@
 (when (fboundp 'windmove-default-keybindings)       ; move point from window to window
   (windmove-default-keybindings 'meta))             ; using meta + arrow keys
 
+
 ;; --------------------------------------------------------------------------------
 ;; language and version control configurations
 
