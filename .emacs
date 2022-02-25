@@ -136,11 +136,12 @@
 (set-frame-font "Inconsolata")
 
 ;; custom key bindings
-(global-set-key (kbd "C-`") 'auto-complete-mode)    ; toggle auto-complete with C-`
-(global-set-key (kbd "C-1") 'flyspell-mode)         ; toggle spelling checker with C-1
-(global-set-key (kbd "C-x C-b") 'buffer-menu)       ; buffer-menu instead of list-buffers
-(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up
-(global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
+(global-set-key (kbd "C-`") 'auto-complete-mode)       ; toggle auto-complete with C-`
+(global-set-key (kbd "C-1") 'flyspell-mode)            ; toggle spelling checker with C-1
+(global-set-key (kbd "C-x C-b") 'buffer-menu)          ; buffer-menu instead of list-buffers
+(global-set-key (kbd "C-S-<up>") 'move-line-up)        ; dragging lines up
+(global-set-key (kbd "C-S-<down>") 'move-line-down)    ; dragging lines down
+(global-set-key (kbd "C-x q") 'kill-buffer-and-window) ; kill buffer and quit window
 
 ;; navigating between multiple windows
 (when (fboundp 'windmove-default-keybindings)       ; move point from window to window
@@ -264,7 +265,7 @@
 ;; timov
 (defun irc-connect-to-timov ()
   (interactive)
-  (erc-tls :server "timov.live"
+  (erc-tls :server "irc.timov.live"
 	   :port   "6697"))
 
 
