@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 24th february 2022.
+;; last updated 25th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -8,7 +8,7 @@
 
 ;; MELPA repository
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
 
 ;; list of packages i use
 (setq package-list
@@ -16,19 +16,19 @@
 		 haskell-mode elixir-mode go-mode ess elm-mode
 		 markdown-mode magit org-roam verb ein))
 
-;; 1. activate all packages
-;; 2. fetch the list of packages available
-;; 3. install missing packages
-;; 4. enable use-package
+;; activate all packages
 (package-initialize)
 
+;; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
 
+;; install missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
 
+;; enable use-package
 (require 'use-package)
 
 
@@ -42,30 +42,29 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-;; me
-(setq user-full-name "William Santos"
-      user-mail-address "w@wsantos.net")
+(setq erc-server-coding-system '(utf-8 . utf-8))
 
-;; calendar
+
+
+;; me
+(setq user-full-name     "William Santos"
+      user-mail-address  "w@wsantos.net"
+      erc-nick           "mutt"
+      erc-user-full-name "william santos <018e6f.me>")
+
+;; date, time, calendar
 (setq calendar-week-start-day 1)
 (setq display-time-format "%a %d %b %I:%M%p")
 
 ;; warn when opening files > 100MB
 (setq large-file-warning-threshold 100000000)
 
-;; automatically refresh buffers/org-roam cache when file changes on disk
+;; automatically refresh buffers when files change on-disk
 (global-auto-revert-mode t)
-
-(use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-directory "~/org")
-  :config
-  (org-roam-db-autosync-mode))
 
 
 ;; --------------------------------------------------------------------------------
-;; my functions
+;; functions
 
 
 ;; drag current line up and down
@@ -101,8 +100,8 @@
 
 ;; smooth scrolling
 ;; from https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
-(setq scroll-margin 0
-      scroll-conservatively 100000
+(setq scroll-margin                   0
+      scroll-conservatively           100000
       scroll-preserve-screen-position 1)
 
 (when (fboundp 'pixel-scroll-precision-mode)
@@ -117,21 +116,12 @@
 
 ;; save and restore sessions automatically
 (setq desktop-path '("~/org/emacs/sessions/"))
-
 (desktop-save-mode)
 
-;; don't blink cursor
-;; display time globally
-(blink-cursor-mode -1)
+;; display time globally, don't blink cursor, always show line numbers
 (display-time-mode 1)
-
-;; always show line numbers and git gutter
+(blink-cursor-mode -1)
 (global-display-line-numbers-mode)
-
-(use-package git-gutter
-  :ensure t
-  :config
-  (global-git-gutter-mode 1))
 
 ;; hide toolbars and scrollbars
 (menu-bar-mode 0)
@@ -143,19 +133,37 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-;; highlight parenthesis
-(use-package paren
-  :config
-  (show-paren-mode +1))
-
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
 (set-frame-font "Inconsolata")
 
+;; custom key bindings
+(global-set-key (kbd "C-`") 'auto-complete-mode)    ; toggle auto-complete with C-`
+(global-set-key (kbd "C-1") 'flyspell-mode)         ; toggle spelling checker with C-1
+(global-set-key (kbd "C-x C-b") 'buffer-menu)       ; buffer-menu instead of list-buffers
+(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up
+(global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
+
+;; navigating between multiple windows
+(when (fboundp 'windmove-default-keybindings)       ; move point from window to window
+  (windmove-default-keybindings 'meta))             ; using meta + arrow keys
+
+;; always show git gutter
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode 1))
+
+;; highlight parenthesis
+(use-package paren
+  :config
+  (show-paren-mode +1))
+
 ;; load and configure global theme.
-;; you should always restart emacs after changing this. eval-buffer is not enough.
-;; i don't actually know why.
+;;
+;; you should restart emacs after changing this. eval-buffer is not always enough.
+;; i don't know why.
 ;;
 ;; dark:
 ;; - doom-acario-dark
@@ -182,23 +190,12 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-acario-dark t))
 
-;; custom key bindings
-(global-set-key (kbd "C-`") 'auto-complete-mode)    ; toggle auto-complete with C-`
-(global-set-key (kbd "C-1") 'flyspell-mode)         ; toggle spelling checker with C-1
-(global-set-key (kbd "C-x C-b") 'buffer-menu)       ; buffer-menu instead of list-buffers
-(global-set-key (kbd "C-S-<up>") 'move-line-up)     ; dragging lines up
-(global-set-key (kbd "C-S-<down>") 'move-line-down) ; dragging lines down
-
-;; navigating between multiple windows
-(when (fboundp 'windmove-default-keybindings)       ; move point from window to window
-  (windmove-default-keybindings 'meta))             ; using meta + arrow keys
-
 
 ;; --------------------------------------------------------------------------------
 ;; language and version control configurations
 
 
-;; org-mode stuff
+;; org-mode
 (use-package org
   :ensure t
   :mode
@@ -210,32 +207,64 @@
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture))
 
-;; auth refresh magit buffers when repo changes
-(use-package magit
+;; org-roam
+(use-package org-roam
   :ensure t
+  :init
+  (setq org-roam-directory "~/org")
   :config
-  (with-eval-after-load 'magit-mode
-    (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
+  (org-roam-db-autosync-mode))
 
-;; auto go fmt when saving golang buffers
+;; golang
 (use-package go-mode
   :ensure t
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
-;; auto elm-format when saving elm buffers (requires npm i -g elm-format)
+;; elm
 (use-package elm-mode
   :ensure t
   :config
   (add-hook 'elm-mode-hook 'elm-format-on-save-mode))
 
-;; auto elixir-format when saving elixir buffers
+;; elixir
 (use-package elixir-mode
   :ensure t
   :config
   (add-hook
    'elixir-mode-hook (lambda () (add-hook 'before-save-hook
 					  'elixir-format nil t))))
+
+;; magit
+(use-package magit
+  :ensure t
+  :config
+  (with-eval-after-load 'magit-mode
+    (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
+
+
+;; --------------------------------------------------------------------------------
+;; public IRC servers i use
+
+
+;; channels to automatically join
+(require 'erc-join)
+(erc-autojoin-mode 1)
+(setq erc-autojoin-channels-alist
+          '(("libera.chat" "#emacs")
+            ("freenode.net" "#emacs")))
+
+;; libera
+(defun irc-libera ()
+  (lambda ()
+    (erc :server "irc.libera.chat"
+	 :port   "6697")))
+
+;; freenode
+(defun irc-freenode ()
+  (lambda ()
+    (erc :server "chat.freenode.net"
+	 :port   "6667")))
 
 
 ;; --------------------------------------------------------------------------------
@@ -254,9 +283,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(git-gutter:added-sign "aa")
- '(git-gutter:deleted-sign "rr")
- '(git-gutter:modified-sign "mm")
+ '(git-gutter:added-sign "a")
+ '(git-gutter:deleted-sign "r")
+ '(git-gutter:modified-sign "m")
  '(package-selected-packages
    '(ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
