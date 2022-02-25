@@ -44,12 +44,10 @@
 
 (setq erc-server-coding-system '(utf-8 . utf-8))
 
-
-
 ;; me
 (setq user-full-name     "William Santos"
       user-mail-address  "w@wsantos.net"
-      erc-nick           "mutt"
+      erc-nick           "gromug"
       erc-user-full-name "william santos <018e6f.me>")
 
 ;; date, time, calendar
