@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 25th february 2022.
+;; last updated 27th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -246,9 +246,10 @@
 
 
 ;; configure ERC client
-(setq
- erc-kill-buffer-on-part t
- erc-prompt (lambda () (concat ":" (buffer-name) ">")))
+(setq erc-kill-buffer-on-part t
+      erc-autojoin-channels-alist
+      '(("irc.timov.live" "#goldencafe"))
+      erc-prompt (lambda () (concat ":" (buffer-name) ">")))
 
 ;; libera
 (defun irc-connect-to-libera ()
