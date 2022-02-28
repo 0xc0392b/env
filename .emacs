@@ -258,7 +258,6 @@
 
 
 ;; configure circe IRC client
-(setq circe-format-say "<{nick:-10s}> : {body}")
 (setq circe-network-options
       '(("timov.live"
 	 :use-tls t :host "irc.timov.live" :port 6697
