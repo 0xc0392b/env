@@ -258,6 +258,9 @@
 
 
 ;; configure circe IRC client
+(require 'circe-display-images)
+(enable-circe-display-images)
+
 (setq circe-network-options
       '(("timov.live"
 	 :use-tls t :host "irc.timov.live" :port 6697
@@ -299,7 +302,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(circe-default-directory "~/Downloads")
+ '(circe-default-directory "~/org/irc/")
  '(circe-default-nick "gromug")
  '(circe-default-part-message "bye o/")
  '(circe-default-quit-message "bye o/")
