@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 27th february 2022.
+;; last updated 28th february 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -8,13 +8,13 @@
 
 ;; MELPA repository
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; list of packages i use
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode magit org-roam verb ein))
+		 markdown-mode magit org-roam verb ein circe))
 
 ;; activate all packages
 (package-initialize)
@@ -41,13 +41,10 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(setq erc-server-coding-system '(utf-8 . utf-8))
 
 ;; me
 (setq user-full-name     "William Santos"
-      user-mail-address  "w@wsantos.net"
-      erc-nick           "gromug"
-      erc-user-full-name "william santos <018e6f.me>")
+      user-mail-address  "w@wsantos.net")
 
 ;; date, time, calendar
 (setq calendar-week-start-day 1)
@@ -55,6 +52,9 @@
 
 ;; warn when opening files > 100MB
 (setq large-file-warning-threshold 100000000)
+
+;; GPG-encrypted credentials
+(setq auth-sources '("~/org/authinfo.gpg"))
 
 ;; automatically refresh buffers when files change on-disk
 (global-auto-revert-mode t)
@@ -80,6 +80,18 @@
   (transpose-lines 1)
   (forward-line -1)
   (indent-according-to-mode))
+
+;; read GPG-encrypted password using auth-source params
+;; from https://github.com/emacs-circe/circe/wiki/Configuration#safer-password-management
+(defun fetch-password (&rest params)
+  (require 'auth-source)
+  (let ((match (car (apply 'auth-source-search params))))
+    (if match
+        (let ((secret (plist-get match :secret)))
+          (if (functionp secret)
+              (funcall secret)
+            secret))
+      (error "Password not found for %S" params))))
 
 
 ;; --------------------------------------------------------------------------------
@@ -245,29 +257,31 @@
 ;; IRC
 
 
-;; configure ERC client
-(setq erc-kill-buffer-on-part t
-      erc-autojoin-channels-alist
-      '(("irc.timov.live" "#goldencafe"))
-      erc-prompt (lambda () (concat ":" (buffer-name) ">")))
+;; configure circe IRC client
+(setq circe-format-say "<{nick:-10s}> : {body}")
+(setq circe-network-options
+      '(("timov.live"
+	 :use-tls t :host "irc.timov.live" :port 6697
+         :channels ("#goldencafe")
+         :nickserv-password (lambda (server) (fetch-password
+					      :user "gromug"
+					      :machine "irc.timov.live")))
+	("libera.chat"
+	 :use-tls t :host "irc.libera.chat" :port 6697
+         :channels ("#libera" "##moshpit")
+         :nickserv-password (lambda (server) (fetch-password
+					      :user "gromug"
+					      :machine "irc.libera.chat")))))
 
-;; libera
-(defun irc-connect-to-libera ()
+(defun timov ()
+  "Connect to timov.live IRC network."
   (interactive)
-  (erc-tls :server "irc.libera.chat"
-	   :port   "6697"))
+  (circe "timov.live"))
 
-;; freenode
-(defun irc-connect-to-freenode ()
+(defun libera ()
+  "Connect to libera.chat IRC network."
   (interactive)
-  (erc-tls :server "chat.freenode.net"
-	   :port   "6697"))
-
-;; timov
-(defun irc-connect-to-timov ()
-  (interactive)
-  (erc-tls :server "irc.timov.live"
-	   :port   "6697"))
+  (circe "libera.chat"))
 
 
 ;; --------------------------------------------------------------------------------
@@ -286,11 +300,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(circe-default-directory "~/Downloads")
+ '(circe-default-nick "gromug")
+ '(circe-default-part-message "bye o/")
+ '(circe-default-quit-message "bye o/")
+ '(circe-default-realname "william santos <w@018e6f.me>")
+ '(circe-default-user "gromug")
+ '(circe-extra-nicks '("wholeham" "william"))
  '(git-gutter:added-sign "a")
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
  '(package-selected-packages
-   '(ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
