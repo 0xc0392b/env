@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 28th february 2022.
+;; last updated 1st march 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -14,7 +14,8 @@
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode magit org-roam verb ein circe))
+		 markdown-mode magit org-roam verb ein circe
+		 elfeed elfeed-org))
 
 ;; activate all packages
 (package-initialize)
@@ -287,6 +288,20 @@
 
 
 ;; --------------------------------------------------------------------------------
+;; RSS
+
+
+;; elfeed-org
+(use-package elfeed-org
+  :ensure t
+  :init
+  (setq rmh-elfeed-org-files (list "~/org/rss.org"))
+  :config
+  (global-set-key (kbd "C-x w") 'elfeed)
+  (elfeed-org))
+
+
+;; --------------------------------------------------------------------------------
 ;; email
 
 
@@ -302,7 +317,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(circe-default-directory "~/org/irc/")
+ '(circe-default-directory "~/org/")
  '(circe-default-nick "gromug")
  '(circe-default-part-message "bye o/")
  '(circe-default-quit-message "bye o/")
@@ -313,7 +328,7 @@
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
  '(package-selected-packages
-   '(circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
