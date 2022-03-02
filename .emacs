@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 1st march 2022.
+;; last updated 2nd march 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -81,18 +81,6 @@
   (transpose-lines 1)
   (forward-line -1)
   (indent-according-to-mode))
-
-;; read GPG-encrypted password using auth-source params
-;; from https://github.com/emacs-circe/circe/wiki/Configuration#safer-password-management
-(defun fetch-password (&rest params)
-  (require 'auth-source)
-  (let ((match (car (apply 'auth-source-search params))))
-    (if match
-        (let ((secret (plist-get match :secret)))
-          (if (functionp secret)
-              (funcall secret)
-            secret))
-      (error "Password not found for %S" params))))
 
 
 ;; --------------------------------------------------------------------------------
@@ -259,32 +247,25 @@
 
 
 ;; configure circe IRC client
-(require 'circe-display-images)
-(enable-circe-display-images)
+(use-package circe
+  :ensure t
+  :init
+  (setq circe-network-options
+	'(("timov.live" :use-tls t :host "irc.timov.live" :port 6697)
+	  ("libera.chat" :use-tls t :host "irc.libera.chat" :port 6697)))
 
-(setq circe-network-options
-      '(("timov.live"
-	 :use-tls t :host "irc.timov.live" :port 6697
-         :channels ("#goldencafe")
-         :nickserv-password (lambda (server) (fetch-password
-					      :user "gromug"
-					      :machine "irc.timov.live")))
-	("libera.chat"
-	 :use-tls t :host "irc.libera.chat" :port 6697
-         :channels ("#libera" "##moshpit")
-         :nickserv-password (lambda (server) (fetch-password
-					      :user "gromug"
-					      :machine "irc.libera.chat")))))
+  (defun timov ()
+    "Connect to timov.live IRC network."
+    (interactive)
+    (circe "timov.live"))
 
-(defun timov ()
-  "Connect to timov.live IRC network."
-  (interactive)
-  (circe "timov.live"))
-
-(defun libera ()
-  "Connect to libera.chat IRC network."
-  (interactive)
-  (circe "libera.chat"))
+  (defun libera ()
+    "Connect to libera.chat IRC network."
+    (interactive)
+    (circe "libera.chat"))
+  :config
+  (require 'circe-display-images)
+  (enable-circe-display-images))
 
 
 ;; --------------------------------------------------------------------------------
@@ -323,12 +304,12 @@
  '(circe-default-quit-message "bye o/")
  '(circe-default-realname "william santos <w@018e6f.me>")
  '(circe-default-user "gromug")
- '(circe-extra-nicks '("wholeham" "william"))
+ '(circe-extra-nicks '("wholeham" "william" "will"))
  '(git-gutter:added-sign "a")
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
  '(package-selected-packages
-   '(elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
