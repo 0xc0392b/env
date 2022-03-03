@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 2nd march 2022.
+;; last updated 3rd march 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -305,6 +305,10 @@
  '(circe-default-realname "william santos <w@018e6f.me>")
  '(circe-default-user "gromug")
  '(circe-extra-nicks '("wholeham" "william" "will"))
+ '(elfeed-search-date-format '("%d-%m-%Y %H-%M-%S" 20 :left))
+ '(elfeed-search-title-max-width 50)
+ '(elfeed-search-title-min-width 20)
+ '(elfeed-user-agent "william >:)")
  '(git-gutter:added-sign "a")
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
