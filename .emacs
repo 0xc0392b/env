@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 3rd march 2022.
+;; last updated 5th march 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -15,7 +15,7 @@
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode ess elm-mode
 		 markdown-mode magit org-roam verb ein circe
-		 elfeed elfeed-org))
+		 emms elfeed elfeed-org))
 
 ;; activate all packages
 (package-initialize)
@@ -283,6 +283,24 @@
 
 
 ;; --------------------------------------------------------------------------------
+;; media
+
+
+(use-package emms
+  :ensure t
+  :init
+  (setq emms-source-file-default-directory "~/Music/")
+  (setq emms-browser-covers #'emms-browser-cache-thumbnail-async)
+  (setq emms-browser-thumbnail-small-size 256)
+  (setq emms-browser-thumbnail-medium-size 256)
+  (setq emms-player-list '(emms-player-mplayer))
+  :config
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players))
+
+
+;; --------------------------------------------------------------------------------
 ;; email
 
 
@@ -313,7 +331,7 @@
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
  '(package-selected-packages
-   '(circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
