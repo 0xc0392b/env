@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 5th march 2022.
+;; last updated 6th march 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -13,9 +13,9 @@
 ;; list of packages i use
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
-		 haskell-mode elixir-mode go-mode ess elm-mode
-		 markdown-mode magit org-roam verb ein circe
-		 emms elfeed elfeed-org))
+		 haskell-mode elixir-mode go-mode elm-mode ess
+		 markdown-mode magit org-roam verb ein circe emms
+		 vertico marginalia elfeed elfeed-org))
 
 ;; activate all packages
 (package-initialize)
@@ -189,6 +189,28 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-acario-dark t))
 
+;; use vertico for completions
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+;; add history to completions
+(use-package savehist
+  :after vertico
+  :init
+  (savehist-mode))
+
+;; add marginalia info to completion buffers
+(use-package marginalia
+  :after vertico
+  :ensure t
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy
+			   marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
+
 
 ;; --------------------------------------------------------------------------------
 ;; language and version control configurations
@@ -272,7 +294,7 @@
 ;; RSS
 
 
-;; elfeed-org
+;; use elfeed-org to read RSS feeds from an org file
 (use-package elfeed-org
   :ensure t
   :init
@@ -286,6 +308,7 @@
 ;; media
 
 
+;; emms music player
 (use-package emms
   :ensure t
   :init
@@ -324,14 +347,14 @@
  '(circe-default-user "gromug")
  '(circe-extra-nicks '("wholeham" "william" "will"))
  '(elfeed-search-date-format '("%d-%m-%Y %H-%M-%S" 20 :left))
- '(elfeed-search-title-max-width 50)
- '(elfeed-search-title-min-width 20)
+ '(elfeed-search-title-max-width 60)
+ '(elfeed-search-title-min-width 25)
  '(elfeed-user-agent "william >:)")
  '(git-gutter:added-sign "a")
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
  '(package-selected-packages
-   '(emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
