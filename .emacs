@@ -18,14 +18,14 @@
 		 vertico marginalia elfeed elfeed-org yaml-mode
 		 dockerfile-mode))
 
-;; activate all packages
+;; activate all
 (package-initialize)
 
-;; fetch the list of packages available
+;; refresh package archive
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; install missing packages
+;; install missing
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
@@ -44,6 +44,9 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; automatically refresh buffers when files change on disk
+(global-auto-revert-mode t)
+
 ;; me
 (setq user-full-name     "William Santos"
       user-mail-address  "w@wsantos.net")
@@ -57,9 +60,6 @@
 
 ;; GPG-encrypted credentials
 (setq auth-sources '("~/org/authinfo.gpg"))
-
-;; automatically refresh buffers when files change on-disk
-(global-auto-revert-mode t)
 
 
 ;; --------------------------------------------------------------------------------
@@ -219,20 +219,21 @@
 
 ;; working with latex in org-mode
 (setq exec-path (append exec-path '("/usr/bin/latex")))
-
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-
 (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
 
 ;; automatically enable flyspell on certain major modes
-(add-hook 'org-mode-hook 'flyspell-mode)
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'latex-mode-hook 'flyspell-mode)
-(add-hook 'magit-mode-hook 'flyspell-mode)
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-(add-hook 'dockerfile-mode-hook 'flyspell-mode)
-(add-hook 'yaml-mode-hook 'flyspell-mode)
-(add-hook 'xml-mode-hook 'flyspell-mode)
+(use-package flyspell
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'latex-mode-hook 'flyspell-mode)
+  (add-hook 'magit-mode-hook 'flyspell-mode)
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+  (add-hook 'dockerfile-mode-hook 'flyspell-mode)
+  (add-hook 'yaml-mode-hook 'flyspell-mode)
+  (add-hook 'xml-mode-hook 'flyspell-mode))
 
 ;; org-mode
 (use-package org
@@ -248,6 +249,7 @@
 
 ;; org-roam
 (use-package org-roam
+  :after org
   :ensure t
   :init
   (setq org-roam-directory "~/org")
