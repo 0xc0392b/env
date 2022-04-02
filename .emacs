@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 6th march 2022.
+;; last updated 2nd april 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -15,7 +15,8 @@
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode elixir-mode go-mode elm-mode ess
 		 markdown-mode magit org-roam verb ein circe emms
-		 vertico marginalia elfeed elfeed-org))
+		 vertico marginalia elfeed elfeed-org yaml-mode
+		 dockerfile-mode))
 
 ;; activate all packages
 (package-initialize)
@@ -213,8 +214,25 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; language and version control configurations
+;; language, spelling, version control
 
+
+;; working with latex in org-mode
+(setq exec-path (append exec-path '("/usr/bin/latex")))
+
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+(org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
+
+;; automatically enable flyspell on certain major modes
+(add-hook 'org-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'latex-mode-hook 'flyspell-mode)
+(add-hook 'magit-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+(add-hook 'dockerfile-mode-hook 'flyspell-mode)
+(add-hook 'yaml-mode-hook 'flyspell-mode)
+(add-hook 'xml-mode-hook 'flyspell-mode)
 
 ;; org-mode
 (use-package org
@@ -317,6 +335,7 @@
   (setq emms-browser-thumbnail-small-size 256)
   (setq emms-browser-thumbnail-medium-size 256)
   (setq emms-player-list '(emms-player-mplayer))
+  (setq emms-browser-default-cover (list "~/org/emacs/no_cover.png" nil nil))
   :config
   (require 'emms-setup)
   (emms-all)
@@ -353,8 +372,10 @@
  '(git-gutter:added-sign "a")
  '(git-gutter:deleted-sign "r")
  '(git-gutter:modified-sign "m")
+ '(org-agenda-files nil)
  '(package-selected-packages
-   '(marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs)))
+   '(dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+ '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
