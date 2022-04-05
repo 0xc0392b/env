@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 2nd april 2022.
+;; last updated 5th april 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -16,7 +16,7 @@
 		 haskell-mode elixir-mode go-mode elm-mode ess
 		 markdown-mode magit org-roam verb ein circe emms
 		 vertico marginalia elfeed elfeed-org yaml-mode
-		 dockerfile-mode))
+		 dockerfile-mode exwm telephone-line))
 
 ;; activate all
 (package-initialize)
@@ -32,6 +32,35 @@
 
 ;; enable use-package
 (require 'use-package)
+
+
+;; --------------------------------------------------------------------------------
+;; exwm
+
+
+(require 'exwm)
+(require 'exwm-config)
+(require 'exwm-randr)
+
+(setq exwm-randr-workspace-output-plist '(0 "DP-2" 1 "DP-0.8" 2 "DP-4.8"))
+
+(add-hook 'exwm-randr-screen-change-hook
+	  (lambda ()
+            (start-process-shell-command
+             "xrandr"
+	     nil
+	     "xrandr --output DP-2 --mode 2560x1440")
+            (start-process-shell-command
+             "xrandr"
+	     nil
+	     "xrandr --output DP-0.8 --mode 1920x1080 --above DP-2")
+            (start-process-shell-command
+             "xrandr"
+	     nil
+	     "xrandr --output DP-4.8 --mode 1920x1080 --rotate right --left-of DP-2")))
+
+(exwm-randr-enable)
+(exwm-config-default)
 
 
 ;; --------------------------------------------------------------------------------
@@ -113,9 +142,22 @@
   (global-set-key (kbd "C-\\") 'treemacs)
   (setq treemacs-user-mode-line-format " william's emacs "))
 
-;; save and restore sessions automatically
-(setq desktop-path '("~/org/emacs/sessions/"))
-(desktop-save-mode)
+;; telephone line
+(use-package telephone-line
+  :ensure t
+  :init
+  (setq telephone-line-height 28)
+  (setq telephone-line-lhs
+	'((accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-minor-mode-segment
+                     telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+	'((nil    . (telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))))
+  :config
+  (telephone-line-mode 1))
 
 ;; display time globally, don't blink cursor, always show line numbers
 (display-time-mode 1)
@@ -147,7 +189,7 @@
 
 ;; navigating between multiple windows
 (when (fboundp 'windmove-default-keybindings)       ; move point from window to window
-  (windmove-default-keybindings 'meta))             ; using meta + arrow keys
+  (windmove-default-keybindings 'super))             ; using super + arrow keys
 
 ;; always show git gutter
 (use-package git-gutter
@@ -376,7 +418,7 @@
  '(git-gutter:modified-sign "m")
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+   '(telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
  '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
