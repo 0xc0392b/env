@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 5th april 2022.
+;; last updated 29th april 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -13,8 +13,8 @@
 ;; list of packages i use
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
-		 haskell-mode elixir-mode go-mode elm-mode ess
-		 markdown-mode magit org-roam verb ein circe emms
+		 haskell-mode scala-mode elixir-mode go-mode elm-mode
+		 ess markdown-mode magit org-roam verb ein circe emms
 		 vertico marginalia elfeed elfeed-org yaml-mode
 		 dockerfile-mode exwm telephone-line))
 
@@ -44,20 +44,7 @@
 
 (setq exwm-randr-workspace-output-plist '(0 "DP-2" 1 "DP-0.8" 2 "DP-4.8"))
 
-(add-hook 'exwm-randr-screen-change-hook
-	  (lambda ()
-            (start-process-shell-command
-             "xrandr"
-	     nil
-	     "xrandr --output DP-2 --mode 2560x1440")
-            (start-process-shell-command
-             "xrandr"
-	     nil
-	     "xrandr --output DP-0.8 --mode 1920x1080 --above DP-2")
-            (start-process-shell-command
-             "xrandr"
-	     nil
-	     "xrandr --output DP-4.8 --mode 1920x1080 --rotate right --left-of DP-2")))
+(start-process-shell-command "xrandr" nil "xrandr --output DP-0.8 --mode 1920x1080 --pos 1952x0 --rotate normal --output DP-4.8 --mode 1920x1080 --pos 0x824 --rotate right --output HDMI-0 --off --output DP-5 --off --output DP-4 --off --output DP-3 --off --output DP-2 --primary --mode 2560x1440 --pos 1080x1080 --rotate normal --output DP-1 --off --output DP-0 --off")
 
 (exwm-randr-enable)
 (exwm-config-default)
@@ -418,7 +405,7 @@
  '(git-gutter:modified-sign "m")
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+   '(scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
  '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
