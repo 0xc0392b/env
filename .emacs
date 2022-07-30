@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 29th april 2022.
+;; last updated 30th july 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -305,6 +305,22 @@
    'elixir-mode-hook (lambda () (add-hook 'before-save-hook
 					  'elixir-format nil t))))
 
+;; scala and sbt
+(use-package scala-mode
+  :ensure t
+  :interpreter
+  ("scala" . scala-mode))
+
+(use-package sbt-mode
+  :ensure t
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map))
+
 ;; magit
 (use-package magit
   :ensure t
@@ -405,7 +421,7 @@
  '(git-gutter:modified-sign "m")
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+   '(sbt-mode scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
  '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
