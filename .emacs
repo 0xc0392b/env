@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 30th july 2022.
+;; last updated 2nd october 2022.
 
 
 ;; --------------------------------------------------------------------------------
@@ -14,9 +14,9 @@
 (setq package-list
       '(treemacs use-package doom-themes git-gutter auto-complete
 		 haskell-mode scala-mode elixir-mode go-mode elm-mode
-		 ess markdown-mode magit org-roam verb ein circe emms
-		 vertico marginalia elfeed elfeed-org yaml-mode
-		 dockerfile-mode exwm telephone-line))
+		 ess markdown-mode magit org-roam verb ein emms vertico
+		 marginalia elfeed elfeed-org yaml-mode dockerfile-mode
+		 exwm telephone-line dashboard))
 
 ;; activate all
 (package-initialize)
@@ -121,6 +121,20 @@
 
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
+
+;; dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-center-content t)
+  (setq dashboard-week-agenda t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-banner-logo-title "emags / william's emacs")
+  (setq dashboard-startup-banner "/home/william/.emacs.d/banner.png")
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (agenda . 5))))
 
 ;; treemacs
 (use-package treemacs
@@ -246,6 +260,10 @@
 ;; language, spelling, version control
 
 
+;; ...
+(require 'oc-biblatex)
+
+
 ;; working with latex in org-mode
 (setq exec-path (append exec-path '("/usr/bin/latex")))
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
@@ -330,32 +348,6 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; IRC
-
-
-;; configure circe IRC client
-(use-package circe
-  :ensure t
-  :init
-  (setq circe-network-options
-	'(("timov.live" :use-tls t :host "irc.timov.live" :port 6697)
-	  ("libera.chat" :use-tls t :host "irc.libera.chat" :port 6697)))
-
-  (defun timov ()
-    "Connect to timov.live IRC network."
-    (interactive)
-    (circe "timov.live"))
-
-  (defun libera ()
-    "Connect to libera.chat IRC network."
-    (interactive)
-    (circe "libera.chat"))
-  :config
-  (require 'circe-display-images)
-  (enable-circe-display-images))
-
-
-;; --------------------------------------------------------------------------------
 ;; RSS
 
 
@@ -405,13 +397,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(circe-default-directory "~/org/")
- '(circe-default-nick "gromug")
- '(circe-default-part-message "bye o/")
- '(circe-default-quit-message "bye o/")
- '(circe-default-realname "william santos <w@018e6f.me>")
- '(circe-default-user "gromug")
- '(circe-extra-nicks '("wholeham" "william" "will"))
  '(elfeed-search-date-format '("%d-%m-%Y %H-%M-%S" 20 :left))
  '(elfeed-search-title-max-width 60)
  '(elfeed-search-title-min-width 25)
@@ -421,7 +406,7 @@
  '(git-gutter:modified-sign "m")
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(sbt-mode scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms circe-display-images elfeed-org elfeed circe ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+   '(dashboard sbt-mode scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms elfeed-org elfeed ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
  '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
