@@ -1,5 +1,5 @@
 ;; william's emacs config~
-;; last updated 2nd october 2022.
+;; last updated 31st january 2023.
 
 
 ;; --------------------------------------------------------------------------------
@@ -16,7 +16,7 @@
 		 haskell-mode scala-mode elixir-mode go-mode elm-mode
 		 ess markdown-mode magit org-roam verb ein emms vertico
 		 marginalia elfeed elfeed-org yaml-mode dockerfile-mode
-		 exwm telephone-line dashboard))
+		 exwm telephone-line dashboard rjsx-mode))
 
 ;; activate all
 (package-initialize)
@@ -32,22 +32,6 @@
 
 ;; enable use-package
 (require 'use-package)
-
-
-;; --------------------------------------------------------------------------------
-;; exwm
-
-
-(require 'exwm)
-(require 'exwm-config)
-(require 'exwm-randr)
-
-(setq exwm-randr-workspace-output-plist '(0 "DP-2" 1 "DP-0.8" 2 "DP-4.8"))
-
-(start-process-shell-command "xrandr" nil "xrandr --output DP-0.8 --mode 1920x1080 --pos 1952x0 --rotate normal --output DP-4.8 --mode 1920x1080 --pos 0x824 --rotate right --output HDMI-0 --off --output DP-5 --off --output DP-4 --off --output DP-3 --off --output DP-2 --primary --mode 2560x1440 --pos 1080x1080 --rotate normal --output DP-1 --off --output DP-0 --off")
-
-(exwm-randr-enable)
-(exwm-config-default)
 
 
 ;; --------------------------------------------------------------------------------
@@ -75,7 +59,7 @@
 (setq large-file-warning-threshold 100000000)
 
 ;; GPG-encrypted credentials
-(setq auth-sources '("~/org/authinfo.gpg"))
+(setq auth-sources '("~/Org/authinfo.gpg"))
 
 
 ;; --------------------------------------------------------------------------------
@@ -131,7 +115,6 @@
   (setq dashboard-week-agenda t)
   (setq dashboard-set-footer nil)
   (setq dashboard-banner-logo-title "emags / william's emacs")
-  (setq dashboard-startup-banner "/home/william/.emacs.d/banner.png")
   (setq dashboard-items '((recents  . 5)
                           (bookmarks . 5)
                           (agenda . 5))))
@@ -178,7 +161,7 @@
 ;; set default font (this should already be a system font)
 ;; note: using Inconsolata version >= 3.001 requires emacs to be compiled --with-cairo
 ;;       instead of Xft. see https://github.com/googlefonts/Inconsolata/issues/42
-(set-frame-font "Inconsolata")
+;; (set-frame-font "Inconsolata")
 
 ;; custom key bindings
 (global-set-key (kbd "C-`") 'auto-complete-mode)       ; toggle auto-complete with C-`
@@ -189,8 +172,8 @@
 (global-set-key (kbd "C-x q") 'kill-buffer-and-window) ; kill buffer and quit window
 
 ;; navigating between multiple windows
-(when (fboundp 'windmove-default-keybindings)       ; move point from window to window
-  (windmove-default-keybindings 'super))             ; using super + arrow keys
+(when (fboundp 'windmove-default-keybindings)          ; move point from window to window
+  (windmove-default-keybindings 'meta))                ; using meta + arrow keys
 
 ;; always show git gutter
 (use-package git-gutter
@@ -289,7 +272,12 @@
   ("\\.org\\'" . org-mode)
   :config
   (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
-  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
+
+  (define-key org-mode-map "M-<left>" nil)
+  (define-key org-mode-map "M-<right>" nil)
+  (define-key org-mode-map "M-<up>" nil)
+  (define-key org-mode-map "M-<down>" nil)
+
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture))
@@ -299,7 +287,7 @@
   :after org
   :ensure t
   :init
-  (setq org-roam-directory "~/org")
+  (setq org-roam-directory "~/Org")
   :config
   (org-roam-db-autosync-mode))
 
@@ -355,7 +343,7 @@
 (use-package elfeed-org
   :ensure t
   :init
-  (setq rmh-elfeed-org-files (list "~/org/rss.org"))
+  (setq rmh-elfeed-org-files (list "~/Org/rss.org"))
   :config
   (global-set-key (kbd "C-x w") 'elfeed)
   (elfeed-org))
@@ -374,7 +362,7 @@
   (setq emms-browser-thumbnail-small-size 256)
   (setq emms-browser-thumbnail-medium-size 256)
   (setq emms-player-list '(emms-player-mplayer))
-  (setq emms-browser-default-cover (list "~/org/emacs/no_cover.png" nil nil))
+  (setq emms-browser-default-cover (list "~/Org/gallery/pictures/mags.png" nil nil))
   :config
   (require 'emms-setup)
   (emms-all)
@@ -382,14 +370,7 @@
 
 
 ;; --------------------------------------------------------------------------------
-;; email
-
-
-;; TODO
-
-
-;; --------------------------------------------------------------------------------
-;; auto generated
+;; auto generated stuff
 
 
 (custom-set-variables
@@ -406,7 +387,7 @@
  '(git-gutter:modified-sign "m")
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(dashboard sbt-mode scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms elfeed-org elfeed ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
+   '(rjsx-mode dashboard sbt-mode scala-mode telephone-line exwm dockerfile-mode yaml-mode marginalia vertico emms elfeed-org elfeed ein verb org-roam magit doom-themes ess elixir-mode markdown-mode elm-mode go-mode auto-complete git-gutter haskell-mode treemacs))
  '(scroll-down-aggressively nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
