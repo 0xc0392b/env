@@ -359,9 +359,9 @@ Auto enable spell checking on the listed modes.
 	  org-return-follows-link t
 	  org-deadline-warning-days 30
 	  org-latex-pdf-process (list "latexmk -f -pdf %f")
-	  org-agenda-files '("~/Org/william/planner/inbox.org"
-			     "~/Org/william/planner/projects.org"
-			     "~/Org/william/planner/repeaters.org"))
+	  org-agenda-files '("~/Org/william/inbox.org"
+			     "~/Org/william/projects.org"
+			     "~/Org/william/repeaters.org"))
 
     (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
 
@@ -375,7 +375,7 @@ Auto enable spell checking on the listed modes.
   (use-package org-roam
     :ensure t
     :init
-    (setq org-roam-directory "~/Org/william/notebook")
+    (setq org-roam-directory "~/Org/william/notes")
     :config
     (org-roam-db-autosync-mode))
 #+END_SRC
@@ -438,7 +438,7 @@ Auto enable spell checking on the listed modes.
   (use-package elfeed-org
     :ensure t
     :init
-    (setq rmh-elfeed-org-files (list "~/Org/william/toolbox/rss.org"))
+    (setq rmh-elfeed-org-files (list "~/Org/william/rss.org"))
     :config
     (global-set-key (kbd "C-x w") 'elfeed)
     (elfeed-org))
@@ -454,7 +454,7 @@ Auto enable spell checking on the listed modes.
     (setq emms-browser-thumbnail-small-size 256)
     (setq emms-browser-thumbnail-medium-size 256)
     (setq emms-player-list '(emms-player-mplayer))
-    (setq emms-browser-default-cover (list "~/Org/william/gallery/pictures/mags.png" nil nil))
+    (setq emms-browser-default-cover (list "~/Org/william/images/mags.png" nil nil))
     :config
     (require 'emms-setup)
     (emms-all)
