@@ -5,9 +5,8 @@
 #+TITLE: emacs config
 #+PROPERTY: header-args :tangle ~/.emacs.d/init.el 
 
-* emacs config
-** initialisation
-*** package repositories
+* initialisation
+** package repositories
 #+BEGIN_SRC elisp
   (require 'package)
 
@@ -17,7 +16,7 @@
   (package-initialize)
 #+END_SRC
 
-*** use-package
+** use-package
 https://ianyepan.github.io/posts/setting-up-use-package/
 
 #+BEGIN_SRC elisp
@@ -32,7 +31,7 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 	  use-package-expand-minimally t))
 #+END_SRC
 
-*** chatgpt-shell
+** chatgpt-shell
 #+BEGIN_SRC elisp
   (add-to-list 'load-path "~/.emacs.d/packages/chatgpt-shell")
 
@@ -45,39 +44,39 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 	(auth-source-pick-first-password :host "api.openai.com"))
 #+END_SRC
 
-** key bindings
-*** toggle auto-complete with C-`
+* key bindings
+** toggle auto-complete with C-`
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-`") 'auto-complete-mode)
 #+END_SRC
 
-*** toggle spelling checker with C-1
+** toggle spelling checker with C-1
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-1") 'flyspell-mode)
 #+END_SRC
 
-*** buffer-menu instead of list-buffers
+** buffer-menu instead of list-buffers
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-x C-b") 'buffer-menu)
 #+END_SRC
 
-*** dragging lines up
+** dragging lines up
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-S-<up>") 'move-line-up)
 #+END_SRC
 
-*** dragging lines down
+** dragging lines down
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-S-<down>") 'move-line-down)
 #+END_SRC
 
-*** kill buffer and quit window
+** kill buffer and quit window
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-x q") 'kill-buffer-and-window)
 #+END_SRC
 
-** configuration
-*** set encoding
+* configuration
+** set encoding
 #+BEGIN_SRC elisp
   (prefer-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
@@ -85,34 +84,34 @@ https://ianyepan.github.io/posts/setting-up-use-package/
   (set-keyboard-coding-system 'utf-8)
 #+END_SRC
 
-*** automatically refresh buffers when files change on disk
+** automatically refresh buffers when files change on disk
 #+BEGIN_SRC elisp
   (global-auto-revert-mode t)
 #+END_SRC
 
-*** me
+** me
 #+BEGIN_SRC elisp
   (setq user-full-name     "William Santos"
 	user-mail-address  "w@wsantos.net")
 #+END_SRC
 
-*** date and time
+** date and time
 #+BEGIN_SRC elisp
   (setq calendar-week-start-day 1)
   (setq display-time-format "%a %d %b %I:%M%p")
 #+END_SRC
 
-*** warn when opening files > 100MB
+** warn when opening files > 100MB
 #+BEGIN_SRC elisp
   (setq large-file-warning-threshold 100000000)
 #+END_SRC
 
-*** GPG-encrypted credentials
+** GPG-encrypted credentials
 #+BEGIN_SRC elisp
   (setq auth-sources '("~/Org/william/authinfo.gpg"))
 #+END_SRC
 
-*** drag current line up and down
+** drag current line up and down
 https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 
 #+BEGIN_SRC elisp
@@ -130,62 +129,62 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
     (indent-according-to-mode))
 #+END_SRC
 
-*** turn off system bell
+** turn off system bell
 #+BEGIN_SRC elisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
 
-*** quit even if processes are running
+** quit even if processes are running
 #+BEGIN_SRC elisp
   (setq confirm-kill-processes nil)
 #+END_SRC
 
-*** don't show default startup screen
+** don't show default startup screen
 #+BEGIN_SRC elisp
   (setq inhibit-startup-screen t)
 #+END_SRC
 
-*** display time globally
+** display time globally
 #+BEGIN_SRC elisp
 (display-time-mode 1)
 #+END_SRC
 
-*** don't blink cursor
+** don't blink cursor
 #+BEGIN_SRC elisp
 (blink-cursor-mode -1)
 #+END_SRC
 
-*** always show line numbers
+** always show line numbers
 #+BEGIN_SRC elisp
 (global-display-line-numbers-mode)
 #+END_SRC
 
-*** hide toolbars and scrollbars
+** hide toolbars and scrollbars
 #+BEGIN_SRC elisp
   (menu-bar-mode 0)
   (tool-bar-mode 0)
   (toggle-scroll-bar 0)
 #+END_SRC
 
-*** configure mode line
+** configure mode line
 #+BEGIN_SRC elisp
   (line-number-mode t)
   (column-number-mode t)
   (size-indication-mode t)
 #+END_SRC
 
-*** set font
+** set font
 #+BEGIN_SRC elisp
   ; (set-frame-font "Inconsolata:style=Regular")
 #+END_SRC
 
-*** move point from window to window using meta + arrow keys
+** move point from window to window using meta + arrow keys
 #+BEGIN_SRC elisp
   (when (fboundp 'windmove-default-keybindings)
     (windmove-default-keybindings 'meta))
 #+END_SRC
 
-*** smooth scrolling
+** smooth scrolling
 https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 
 #+BEGIN_SRC elisp
@@ -197,8 +196,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (pixel-scroll-precision-mode t))
 #+END_SRC
 
-** packages
-*** dashboard
+* packages
+** dashboard
 #+BEGIN_SRC elisp
   (use-package dashboard
     :ensure t
@@ -213,7 +212,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 			    (agenda . 5))))
 #+END_SRC
 
-*** treemacs
+** treemacs
 #+BEGIN_SRC elisp
   (use-package treemacs
     :ensure t
@@ -223,7 +222,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 	  treemacs-width 50))
 #+END_SRC
 
-*** telephone line
+** telephone line
 #+BEGIN_SRC elisp
   (use-package telephone-line
     :ensure t
@@ -242,7 +241,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (telephone-line-mode 1))
 #+END_SRC
 
-***git gutter
+** git gutter
 #+BEGIN_SRC elisp
   (use-package git-gutter
     :ensure t
@@ -250,7 +249,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (global-git-gutter-mode 1))
 #+END_SRC
 
-*** paren
+** paren
 #+BEGIN_SRC elisp
   (use-package paren
     :ensure t
@@ -258,7 +257,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (show-paren-mode +1))
 #+END_SRC
 
-*** doom themes
+** doom themes
 - dark
   - doom-acario-dark
   - doom-challenger-deep
@@ -286,7 +285,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (load-theme 'doom-sourcerer t))
 #+END_SRC
 
-*** vertico
+** vertico
 #+BEGIN_SRC elisp
   (use-package vertico
     :ensure t
@@ -294,7 +293,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (vertico-mode))
 #+END_SRC
 
-*** savehist
+** savehist
 #+BEGIN_SRC elisp
   (use-package savehist
     :ensure t
@@ -302,7 +301,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (savehist-mode))
 #+END_SRC
 
-*** marginalia
+** marginalia
 #+BEGIN_SRC elisp
   (use-package marginalia
     :after vertico
@@ -314,7 +313,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (marginalia-mode))
 #+END_SRC
 
-*** flyspell
+** flyspell
 Auto enable spell checking on the listed modes.
 
 #+BEGIN_SRC elisp
@@ -331,7 +330,7 @@ Auto enable spell checking on the listed modes.
     (add-hook 'xml-mode-hook 'flyspell-mode))
 #+END_SRC
 
-*** magit mode
+** magit mode
 #+BEGIN_SRC elisp
   (use-package magit
     :ensure t
@@ -340,7 +339,7 @@ Auto enable spell checking on the listed modes.
       (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
 #+END_SRC
 
-*** latex mode
+** latex mode
 #+BEGIN_SRC elisp
 ;  (use-package latex
 ;    :ensure t
@@ -349,7 +348,7 @@ Auto enable spell checking on the listed modes.
 ;    (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
 #+END_SRC
 
-*** org mode
+** org mode
 #+BEGIN_SRC elisp
   (use-package org
     :ensure t
@@ -371,7 +370,7 @@ Auto enable spell checking on the listed modes.
     (global-set-key (kbd "C-c c") 'org-capture))
 #+END_SRC
 
-*** org roam
+** org roam
 #+BEGIN_SRC elisp
   (use-package org-roam
     :ensure t
@@ -381,7 +380,7 @@ Auto enable spell checking on the listed modes.
     (org-roam-db-autosync-mode))
 #+END_SRC
 
-*** go mode
+** go mode
 #+BEGIN_SRC elisp
   (use-package go-mode
     :ensure t
@@ -389,7 +388,7 @@ Auto enable spell checking on the listed modes.
     (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
 #+END_SRC
 
-*** dart mode
+** dart mode
 #+BEGIN_SRC elisp
   (use-package dart-mode
     :ensure t
@@ -398,7 +397,7 @@ Auto enable spell checking on the listed modes.
     (add-hook 'dart-mode-hook (lambda () (add-hook 'before-save-hook 'dart-format-buffer))))
 #+END_SRC
 
-*** elm mode
+** elm mode
 #+BEGIN_SRC elisp
   (use-package elm-mode
     :ensure t
@@ -406,7 +405,7 @@ Auto enable spell checking on the listed modes.
     (add-hook 'elm-mode-hook (lambda () (add-hook 'before-save-hook 'elm-format-buffer))))
 #+END_SRC
 
-*** elixir mode
+** elixir mode
 #+BEGIN_SRC elisp
   (use-package elixir-mode
     :ensure t
@@ -414,7 +413,7 @@ Auto enable spell checking on the listed modes.
     (add-hook 'elixir-mode-hook (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
 
-*** scala mode
+** scala mode
 #+BEGIN_SRC elisp
   (use-package scala-mode
     :ensure t
@@ -422,7 +421,7 @@ Auto enable spell checking on the listed modes.
     ("scala" . scala-mode))
 #+END_SRC
 
-*** sbt mode
+** sbt mode
 #+BEGIN_SRC elisp
   (use-package sbt-mode
     :ensure t
@@ -434,7 +433,7 @@ Auto enable spell checking on the listed modes.
      minibuffer-local-completion-map))
 #+END_SRC
 
-*** elfeed mode
+** elfeed mode
 #+BEGIN_SRC elisp
   (use-package elfeed-org
     :ensure t
@@ -445,7 +444,7 @@ Auto enable spell checking on the listed modes.
     (elfeed-org))
 #+END_SRC
 
-*** emms mode
+** emms mode
 #+BEGIN_SRC elisp
   (use-package emms
     :ensure t
@@ -462,8 +461,8 @@ Auto enable spell checking on the listed modes.
     (emms-default-players))
 #+END_SRC
 
-** auto generated stuff
-*** custom set variables
+* auto generated stuff
+** custom set variables
 #+BEGIN_SRC elisp
   (custom-set-variables
    ;; custom-set-variables was added by Custom.
@@ -482,7 +481,7 @@ Auto enable spell checking on the listed modes.
    '(scroll-down-aggressively nil))
 #+END_SRC
 
-*** custom set faces
+** custom set faces
 #+BEGIN_SRC elisp
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
