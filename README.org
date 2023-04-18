@@ -1,0 +1,10 @@
+#+TITLE:  env
+#+AUTHOR: William Santos
+#+EMAIL:  w@wsantos.net
+
+#+ID:               env
+#+LANGUAGE:         en
+#+STARTUP:          showall
+
+My dotfiles and emacs config, written in org-mode.
+Files are compiled with =M-x= =org-babel-tangle=.

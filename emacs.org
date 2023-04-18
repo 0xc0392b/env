@@ -1,0 +1,495 @@
+:PROPERTIES:
+:STARTUP: showall
+:END:
+
+#+TITLE: emacs config
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el 
+
+* emacs config
+** initialisation
+*** package repositories
+#+BEGIN_SRC elisp
+  (require 'package)
+
+  (add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+  (package-initialize)
+#+END_SRC
+
+*** use-package
+https://ianyepan.github.io/posts/setting-up-use-package/
+
+#+BEGIN_SRC elisp
+  (require 'use-package)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-and-compile
+    (setq use-package-always-ensure t
+	  use-package-expand-minimally t))
+#+END_SRC
+
+*** chatgpt-shell
+#+BEGIN_SRC elisp
+  (add-to-list 'load-path "~/.emacs.d/packages/chatgpt-shell")
+
+  (require 'chatgpt-shell)
+  (require 'ob-chatgpt-shell)
+
+  (ob-chatgpt-shell-setup)
+
+  (setq chatgpt-shell-openai-key
+	(auth-source-pick-first-password :host "api.openai.com"))
+#+END_SRC
+
+** key bindings
+*** toggle auto-complete with C-`
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-`") 'auto-complete-mode)
+#+END_SRC
+
+*** toggle spelling checker with C-1
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-1") 'flyspell-mode)
+#+END_SRC
+
+*** buffer-menu instead of list-buffers
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-x C-b") 'buffer-menu)
+#+END_SRC
+
+*** dragging lines up
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-S-<up>") 'move-line-up)
+#+END_SRC
+
+*** dragging lines down
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-S-<down>") 'move-line-down)
+#+END_SRC
+
+*** kill buffer and quit window
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-x q") 'kill-buffer-and-window)
+#+END_SRC
+
+** configuration
+*** set encoding
+#+BEGIN_SRC elisp
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+#+END_SRC
+
+*** automatically refresh buffers when files change on disk
+#+BEGIN_SRC elisp
+  (global-auto-revert-mode t)
+#+END_SRC
+
+*** me
+#+BEGIN_SRC elisp
+  (setq user-full-name     "William Santos"
+	user-mail-address  "w@wsantos.net")
+#+END_SRC
+
+*** date and time
+#+BEGIN_SRC elisp
+  (setq calendar-week-start-day 1)
+  (setq display-time-format "%a %d %b %I:%M%p")
+#+END_SRC
+
+*** warn when opening files > 100MB
+#+BEGIN_SRC elisp
+  (setq large-file-warning-threshold 100000000)
+#+END_SRC
+
+*** GPG-encrypted credentials
+#+BEGIN_SRC elisp
+  (setq auth-sources '("~/Org/william/authinfo.gpg"))
+#+END_SRC
+
+*** drag current line up and down
+https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
+
+#+BEGIN_SRC elisp
+  (defun move-line-up ()
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2)
+    (indent-according-to-mode))
+
+  (defun move-line-down ()
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1)
+    (indent-according-to-mode))
+#+END_SRC
+
+*** turn off system bell
+#+BEGIN_SRC elisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
+*** quit even if processes are running
+#+BEGIN_SRC elisp
+  (setq confirm-kill-processes nil)
+#+END_SRC
+
+*** don't show default startup screen
+#+BEGIN_SRC elisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
+
+*** display time globally
+#+BEGIN_SRC elisp
+(display-time-mode 1)
+#+END_SRC
+
+*** don't blink cursor
+#+BEGIN_SRC elisp
+(blink-cursor-mode -1)
+#+END_SRC
+
+*** always show line numbers
+#+BEGIN_SRC elisp
+(global-display-line-numbers-mode)
+#+END_SRC
+
+*** hide toolbars and scrollbars
+#+BEGIN_SRC elisp
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (toggle-scroll-bar 0)
+#+END_SRC
+
+*** configure mode line
+#+BEGIN_SRC elisp
+  (line-number-mode t)
+  (column-number-mode t)
+  (size-indication-mode t)
+#+END_SRC
+
+*** set font
+#+BEGIN_SRC elisp
+  ; (set-frame-font "Inconsolata:style=Regular")
+#+END_SRC
+
+*** move point from window to window using meta + arrow keys
+#+BEGIN_SRC elisp
+  (when (fboundp 'windmove-default-keybindings)
+    (windmove-default-keybindings 'meta))
+#+END_SRC
+
+*** smooth scrolling
+https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
+
+#+BEGIN_SRC elisp
+  (setq scroll-margin                   0
+	scroll-conservatively           100000
+	scroll-preserve-screen-position 1)
+
+  (when (fboundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode t))
+#+END_SRC
+
+** packages
+*** dashboard
+#+BEGIN_SRC elisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-center-content t)
+    (setq dashboard-week-agenda t)
+    (setq dashboard-set-footer nil)
+    (setq dashboard-banner-logo-title "william's emacs")
+    (setq dashboard-items '((recents  . 5)
+			    (bookmarks . 5)
+			    (agenda . 5))))
+#+END_SRC
+
+*** treemacs
+#+BEGIN_SRC elisp
+  (use-package treemacs
+    :ensure t
+    :init
+    (global-set-key (kbd "C-\\") 'treemacs)
+    (setq treemacs-user-mode-line-format " william's emacs "
+	  treemacs-width 50))
+#+END_SRC
+
+*** telephone line
+#+BEGIN_SRC elisp
+  (use-package telephone-line
+    :ensure t
+    :init
+    (setq telephone-line-height 28)
+    (setq telephone-line-lhs
+	  '((accent . (telephone-line-vc-segment
+		       telephone-line-erc-modified-channels-segment
+		       telephone-line-process-segment))
+	    (nil    . (telephone-line-minor-mode-segment
+		       telephone-line-buffer-segment))))
+    (setq telephone-line-rhs
+	  '((nil    . (telephone-line-misc-info-segment))
+	    (accent . (telephone-line-major-mode-segment))))
+    :config
+    (telephone-line-mode 1))
+#+END_SRC
+
+***git gutter
+#+BEGIN_SRC elisp
+  (use-package git-gutter
+    :ensure t
+    :config
+    (global-git-gutter-mode 1))
+#+END_SRC
+
+*** paren
+#+BEGIN_SRC elisp
+  (use-package paren
+    :ensure t
+    :config
+    (show-paren-mode +1))
+#+END_SRC
+
+*** doom themes
+- dark
+  - doom-acario-dark
+  - doom-challenger-deep
+  - doom-horizon
+  - doom-manegarm
+  - doom-moonlight
+  - doom-nord
+  - doom-oceanic-next
+  - doom-outrun-electric
+  - doom-solarized-dark
+  - doom-sourcerer
+  - doom-tomorrow-night
+- light
+  - doom-nord-light
+  - doom-acario-light
+  - doom-solarized-light
+  - doom-tomorrow-day
+
+#+BEGIN_SRC elisp
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+	  doom-themes-enable-italic t)
+    (load-theme 'doom-sourcerer t))
+#+END_SRC
+
+*** vertico
+#+BEGIN_SRC elisp
+  (use-package vertico
+    :ensure t
+    :init
+    (vertico-mode))
+#+END_SRC
+
+*** savehist
+#+BEGIN_SRC elisp
+  (use-package savehist
+    :ensure t
+    :init
+    (savehist-mode))
+#+END_SRC
+
+*** marginalia
+#+BEGIN_SRC elisp
+  (use-package marginalia
+    :after vertico
+    :ensure t
+    :custom
+    (marginalia-annotators '(marginalia-annotators-heavy
+			     marginalia-annotators-light nil))
+    :init
+    (marginalia-mode))
+#+END_SRC
+
+*** flyspell
+Auto enable spell checking on the listed modes.
+
+#+BEGIN_SRC elisp
+  (use-package flyspell
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'latex-mode-hook 'flyspell-mode)
+    (add-hook 'magit-mode-hook 'flyspell-mode)
+    (add-hook 'markdown-mode-hook 'flyspell-mode)
+    (add-hook 'dockerfile-mode-hook 'flyspell-mode)
+    (add-hook 'yaml-mode-hook 'flyspell-mode)
+    (add-hook 'xml-mode-hook 'flyspell-mode))
+#+END_SRC
+
+*** magit mode
+#+BEGIN_SRC elisp
+  (use-package magit
+    :ensure t
+    :config
+    (with-eval-after-load 'magit-mode
+      (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
+#+END_SRC
+
+*** latex mode
+#+BEGIN_SRC elisp
+;  (use-package latex
+;    :ensure t
+;    :config
+;    (setq exec-path (append exec-path '("/usr/bin/latex")))
+;    (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
+#+END_SRC
+
+*** org mode
+#+BEGIN_SRC elisp
+  (use-package org
+    :ensure t
+    :mode
+    ("\\.org\\'" . org-mode)
+    :config
+    (setq org-use-speed-commands t
+	  org-return-follows-link t
+	  org-deadline-warning-days 30
+	  org-latex-pdf-process (list "latexmk -f -pdf %f")
+	  org-agenda-files '("~/Org/william/planner/inbox.org"
+			     "~/Org/william/planner/projects.org"
+			     "~/Org/william/planner/repeaters.org"))
+
+    (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
+
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c c") 'org-capture))
+#+END_SRC
+
+*** org roam
+#+BEGIN_SRC elisp
+  (use-package org-roam
+    :ensure t
+    :init
+    (setq org-roam-directory "~/Org/william/notebook")
+    :config
+    (org-roam-db-autosync-mode))
+#+END_SRC
+
+*** go mode
+#+BEGIN_SRC elisp
+  (use-package go-mode
+    :ensure t
+    :config
+    (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
+#+END_SRC
+
+*** dart mode
+#+BEGIN_SRC elisp
+  (use-package dart-mode
+    :ensure t
+    :config
+    (reformatter-define dart-format :program "dart" :args '("format"))
+    (add-hook 'dart-mode-hook (lambda () (add-hook 'before-save-hook 'dart-format-buffer))))
+#+END_SRC
+
+*** elm mode
+#+BEGIN_SRC elisp
+  (use-package elm-mode
+    :ensure t
+    :config
+    (add-hook 'elm-mode-hook (lambda () (add-hook 'before-save-hook 'elm-format-buffer))))
+#+END_SRC
+
+*** elixir mode
+#+BEGIN_SRC elisp
+  (use-package elixir-mode
+    :ensure t
+    :config
+    (add-hook 'elixir-mode-hook (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
+#+END_SRC
+
+*** scala mode
+#+BEGIN_SRC elisp
+  (use-package scala-mode
+    :ensure t
+    :interpreter
+    ("scala" . scala-mode))
+#+END_SRC
+
+*** sbt mode
+#+BEGIN_SRC elisp
+  (use-package sbt-mode
+    :ensure t
+    :commands sbt-start sbt-command
+    :config
+    (substitute-key-definition
+     'minibuffer-complete-word
+     'self-insert-command
+     minibuffer-local-completion-map))
+#+END_SRC
+
+*** elfeed mode
+#+BEGIN_SRC elisp
+  (use-package elfeed-org
+    :ensure t
+    :init
+    (setq rmh-elfeed-org-files (list "~/Org/william/toolbox/rss.org"))
+    :config
+    (global-set-key (kbd "C-x w") 'elfeed)
+    (elfeed-org))
+#+END_SRC
+
+*** emms mode
+#+BEGIN_SRC elisp
+  (use-package emms
+    :ensure t
+    :init
+    (setq emms-source-file-default-directory "~/Music/")
+    (setq emms-browser-covers #'emms-browser-cache-thumbnail-async)
+    (setq emms-browser-thumbnail-small-size 256)
+    (setq emms-browser-thumbnail-medium-size 256)
+    (setq emms-player-list '(emms-player-mplayer))
+    (setq emms-browser-default-cover (list "~/Org/william/gallery/pictures/mags.png" nil nil))
+    :config
+    (require 'emms-setup)
+    (emms-all)
+    (emms-default-players))
+#+END_SRC
+
+** auto generated stuff
+*** custom set variables
+#+BEGIN_SRC elisp
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(elfeed-search-date-format '("%d-%m-%Y %H-%M-%S" 20 :left))
+   '(elfeed-search-title-max-width 60)
+   '(elfeed-search-title-min-width 25)
+   '(elfeed-user-agent "william >:)")
+   '(git-gutter:added-sign "a")
+   '(git-gutter:deleted-sign "r")
+   '(git-gutter:modified-sign "m")
+   '(org-agenda-files nil)
+   '(package-selected-packages '())
+   '(scroll-down-aggressively nil))
+#+END_SRC
+
+*** custom set faces
+#+BEGIN_SRC elisp
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+#+END_SRC
