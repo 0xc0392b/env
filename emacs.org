@@ -341,7 +341,7 @@ Auto enable spell checking on the listed modes.
 
 ** latex mode
 #+BEGIN_SRC elisp
-;  (use-package latex
+;  (use-package latex-mode
 ;    :ensure t
 ;    :config
 ;    (setq exec-path (append exec-path '("/usr/bin/latex")))
@@ -359,9 +359,7 @@ Auto enable spell checking on the listed modes.
 	  org-return-follows-link t
 	  org-deadline-warning-days 30
 	  org-latex-pdf-process (list "latexmk -f -pdf %f")
-	  org-agenda-files '("~/Org/william/inbox.org"
-			     "~/Org/william/projects.org"
-			     "~/Org/william/repeaters.org"))
+	  org-agenda-files '("~/Org/william/william.org"))
 
     (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
 
