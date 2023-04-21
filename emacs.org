@@ -214,11 +214,11 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     :ensure t
     :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-center-content t)
-    (setq dashboard-week-agenda t)
-    (setq dashboard-set-footer nil)
-    (setq dashboard-banner-logo-title "william's emacs")
-    (setq dashboard-items '((recents  . 5)
+    (setq dashboard-banner-logo-title "william's emacs"
+	  dashboard-center-content t
+	  dashboard-week-agenda t
+	  dashboard-set-footer nil
+	  dashboard-items '((recents  . 5)
 			    (bookmarks . 5)
 			    (agenda . 5))))
 #+END_SRC
@@ -230,26 +230,24 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     :init
     (global-set-key (kbd "C-\\") 'treemacs)
     (setq treemacs-user-mode-line-format " william's emacs "
-	  treemacs-width 50))
+	  treemacs-width 45))
 #+END_SRC
 
 ** telephone line
 #+BEGIN_SRC elisp
   (use-package telephone-line
     :ensure t
-    :init
-    (setq telephone-line-height 28)
-    (setq telephone-line-lhs
-	  '((accent . (telephone-line-vc-segment
-		       telephone-line-erc-modified-channels-segment
-		       telephone-line-process-segment))
-	    (nil    . (telephone-line-minor-mode-segment
-		       telephone-line-buffer-segment))))
-    (setq telephone-line-rhs
-	  '((nil    . (telephone-line-misc-info-segment))
-	    (accent . (telephone-line-major-mode-segment))))
     :config
-    (telephone-line-mode 1))
+    (telephone-line-mode 1)
+    :init
+    (setq telephone-line-height 28
+	  telephone-line-lhs '((accent . (telephone-line-vc-segment
+					  telephone-line-erc-modified-channels-segment
+					  telephone-line-process-segment))
+			       (nil    . (telephone-line-minor-mode-segment
+					  telephone-line-buffer-segment)))
+	  telephone-line-rhs '((nil    . (telephone-line-misc-info-segment))
+			       (accent . (telephone-line-major-mode-segment)))))
 #+END_SRC
 
 ** git gutter
@@ -383,10 +381,10 @@ Auto enable spell checking on the listed modes.
 #+BEGIN_SRC elisp
   (use-package org-roam
     :ensure t
-    :init
-    (setq org-roam-directory "~/Org/william/notes")
     :config
-    (org-roam-db-autosync-mode))
+    (org-roam-db-autosync-mode)
+    :init
+    (setq org-roam-directory "~/Org/william/notes"))
 #+END_SRC
 
 ** go mode
@@ -446,28 +444,28 @@ Auto enable spell checking on the listed modes.
 #+BEGIN_SRC elisp
   (use-package elfeed-org
     :ensure t
-    :init
-    (setq rmh-elfeed-org-files (list "~/Org/william/rss.org"))
     :config
     (global-set-key (kbd "C-x w") 'elfeed)
-    (elfeed-org))
+    (elfeed-org)
+    :init
+    (setq rmh-elfeed-org-files (list "~/Org/william/rss.org")))
 #+END_SRC
 
 ** emms mode
 #+BEGIN_SRC elisp
   (use-package emms
     :ensure t
+    :config
+    (require 'emms-setup)
+    (emms-all)
+    (emms-default-players)
     :init
     (setq emms-source-file-default-directory "~/Music/")
     (setq emms-browser-covers #'emms-browser-cache-thumbnail-async)
     (setq emms-browser-thumbnail-small-size 256)
     (setq emms-browser-thumbnail-medium-size 256)
     (setq emms-player-list '(emms-player-mplayer))
-    (setq emms-browser-default-cover (list "~/Org/william/images/mags.png" nil nil))
-    :config
-    (require 'emms-setup)
-    (emms-all)
-    (emms-default-players))
+    (setq emms-browser-default-cover (list "~/Org/william/images/mags.png" nil nil)))
 #+END_SRC
 
 * auto generated stuff
