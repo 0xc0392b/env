@@ -80,6 +80,12 @@ https://ianyepan.github.io/posts/setting-up-use-package/
   (global-set-key (kbd "s-k") 'kill-this-buffer)
 #+END_SRC
 
+** zoom in and out
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "s-+") 'text-scale-increase)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+#+END_SRC
+
 * configuration
 ** set encoding
 #+BEGIN_SRC elisp
