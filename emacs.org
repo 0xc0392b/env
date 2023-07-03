@@ -31,19 +31,6 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 	  use-package-expand-minimally t))
 #+END_SRC
 
-** chatgpt-shell
-#+BEGIN_SRC elisp
-  (add-to-list 'load-path "~/.emacs.d/packages/chatgpt-shell")
-
-  (require 'chatgpt-shell)
-  (require 'ob-chatgpt-shell)
-
-  (ob-chatgpt-shell-setup)
-
-  (setq chatgpt-shell-openai-key
-	(auth-source-pick-first-password :host "api.openai.com"))
-#+END_SRC
-
 * key bindings
 ** toggle auto-complete with C-`
 #+BEGIN_SRC elisp
@@ -323,12 +310,11 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** flyspell
-Auto enable spell checking on the listed modes.
-
 #+BEGIN_SRC elisp
   (use-package flyspell
     :ensure t
     :config
+    (add-hook 'chatgpt-shell-mode-hook 'flyspell-mode)
     (add-hook 'org-mode-hook 'flyspell-mode)
     (add-hook 'text-mode-hook 'flyspell-mode)
     (add-hook 'latex-mode-hook 'flyspell-mode)
@@ -337,6 +323,14 @@ Auto enable spell checking on the listed modes.
     (add-hook 'dockerfile-mode-hook 'flyspell-mode)
     (add-hook 'yaml-mode-hook 'flyspell-mode)
     (add-hook 'xml-mode-hook 'flyspell-mode))
+#+END_SRC
+
+** chatgpt-shell
+#+BEGIN_SRC elisp
+  (use-package chatgpt-shell
+    :ensure t
+    :config
+    (setq chatgpt-shell-openai-key ""))
 #+END_SRC
 
 ** magit mode
@@ -368,9 +362,12 @@ Auto enable spell checking on the listed modes.
 	  org-return-follows-link t
 	  org-deadline-warning-days 30
 	  org-latex-pdf-process (list "latexmk -f -pdf %f")
-	  org-agenda-files '("~/Org/william/william.org"))
+	  org-agenda-files '("~/Org/william/me.org"))
 
-    (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
+    (org-babel-do-load-languages 'org-babel-load-languages
+				 '((emacs-lisp . t)
+				   (python . t)
+				   (latex . t)))
 
     (global-set-key (kbd "C-c l") 'org-store-link)
     (global-set-key (kbd "C-c a") 'org-agenda)

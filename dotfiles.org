@@ -224,4 +224,7 @@ __pycache__
 
   # dart
   export PATH=$PATH:~/.pub-cache/bin
+
+  # flutter
+  export PATH=$PATH:/usr/bin/flutter/bin
 #+END_SRC
