@@ -427,6 +427,18 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
      minibuffer-local-completion-map))
 #+END_SRC
 
+** yaml mode
+#+BEGIN_SRC elisp
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+** dockerfile mode
+#+BEGIN_SRC elisp
+  (use-package dockerfile-mode
+    :ensure t)
+#+END_SRC
+
 * auto generated stuff
 ** custom set variables
 #+BEGIN_SRC elisp
