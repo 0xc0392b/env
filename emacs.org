@@ -36,7 +36,7 @@ https://github.com/tabfugnic/asdf.el
 
 Makes sure emacs has the correct paths to asdf shims and
 bin. Otherwise cli tools (e.g. gofmt) will not work, as they are
-sources in .bashrc and not .profile
+sources in =.bashrc= and not =.profile=.
 
 #+BEGIN_SRC elisp
   (add-to-list 'load-path "~/.emacs.d/asdf.el") 
