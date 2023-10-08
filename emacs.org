@@ -2,7 +2,7 @@
 :STARTUP: showall
 :END:
 
-#+TITLE: emacs config
+#+TITLE: my emacs config
 #+PROPERTY: header-args :tangle ~/.emacs.d/init.el 
 
 * initialisation
@@ -29,6 +29,19 @@ https://ianyepan.github.io/posts/setting-up-use-package/
   (eval-and-compile
     (setq use-package-always-ensure t
 	  use-package-expand-minimally t))
+#+END_SRC
+
+** asdf version manager
+https://github.com/tabfugnic/asdf.el
+
+Makes sure emacs has the correct paths to asdf shims and
+bin. Otherwise cli tools (e.g. gofmt) will not work, as they are
+sources in .bashrc and not .profile
+
+#+BEGIN_SRC elisp
+  (add-to-list 'load-path "~/.emacs.d/asdf.el") 
+  (require 'asdf)
+  (asdf-enable)
 #+END_SRC
 
 * key bindings
@@ -74,6 +87,17 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 #+END_SRC
 
 * configuration
+** about me
+#+BEGIN_SRC elisp
+  (setq user-full-name     "William Santos"
+	user-mail-address  "w@wsantos.net")
+#+END_SRC
+
+** credentials
+#+BEGIN_SRC elisp
+  (setq auth-sources '("~/Org/william/.authinfo"))
+#+END_SRC
+
 ** set encoding
 #+BEGIN_SRC elisp
   (prefer-coding-system 'utf-8)
@@ -87,12 +111,6 @@ https://ianyepan.github.io/posts/setting-up-use-package/
   (global-auto-revert-mode t)
 #+END_SRC
 
-** me
-#+BEGIN_SRC elisp
-  (setq user-full-name     "William Santos"
-	user-mail-address  "w@wsantos.net")
-#+END_SRC
-
 ** date and time
 #+BEGIN_SRC elisp
   (setq calendar-week-start-day 1)
@@ -102,11 +120,6 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 ** warn when opening files > 100MB
 #+BEGIN_SRC elisp
   (setq large-file-warning-threshold 100000000)
-#+END_SRC
-
-** GPG-encrypted credentials
-#+BEGIN_SRC elisp
-  (setq auth-sources '("~/Org/william/authinfo.gpg"))
 #+END_SRC
 
 ** drag current line up and down
@@ -171,9 +184,12 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
   (size-indication-mode t)
 #+END_SRC
 
-** set font
+** set global font to inconsolata
+https://github.com/googlefonts/Inconsolata
+https://fonts.google.com/specimen/Inconsolata
+
 #+BEGIN_SRC elisp
-  ; (set-frame-font "Inconsolata:style=Regular")
+  (set-frame-font "Inconsolata 12" nil t)
 #+END_SRC
 
 ** move point from window to window using meta + arrow keys
@@ -195,21 +211,6 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 * packages
-** dashboard
-#+BEGIN_SRC elisp
-  (use-package dashboard
-    :ensure t
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-banner-logo-title "william's emacs"
-	  dashboard-center-content t
-	  dashboard-week-agenda t
-	  dashboard-set-footer nil
-	  dashboard-items '((recents  . 5)
-			    (bookmarks . 5)
-			    (agenda . 5))))
-#+END_SRC
-
 ** treemacs
 #+BEGIN_SRC elisp
   (use-package treemacs
@@ -330,7 +331,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
   (use-package chatgpt-shell
     :ensure t
     :config
-    (setq chatgpt-shell-openai-key ""))
+    (setq chatgpt-shell-openai-key
+      (auth-source-pick-first-password :host "api.openai.com")))
 #+END_SRC
 
 ** magit mode
@@ -340,15 +342,6 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     :config
     (with-eval-after-load 'magit-mode
       (add-hook 'after-save-hook 'magit-after-save-refresh-status t)))
-#+END_SRC
-
-** latex mode
-#+BEGIN_SRC elisp
-;  (use-package latex-mode
-;    :ensure t
-;    :config
-;    (setq exec-path (append exec-path '("/usr/bin/latex")))
-;    (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
 #+END_SRC
 
 ** org mode
@@ -392,21 +385,18 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
 #+END_SRC
 
-** dart mode
-#+BEGIN_SRC elisp
-  (use-package dart-mode
-    :ensure t
-    :config
-    (reformatter-define dart-format :program "dart" :args '("format"))
-    (add-hook 'dart-mode-hook (lambda () (add-hook 'before-save-hook 'dart-format-buffer))))
-#+END_SRC
-
 ** elm mode
 #+BEGIN_SRC elisp
   (use-package elm-mode
     :ensure t
     :config
     (add-hook 'elm-mode-hook (lambda () (add-hook 'before-save-hook 'elm-format-buffer))))
+#+END_SRC
+
+** svelte mode
+#+BEGIN_SRC elisp
+  (use-package svelte-mode
+    :ensure t)
 #+END_SRC
 
 ** elixir mode
@@ -435,34 +425,6 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
      'minibuffer-complete-word
      'self-insert-command
      minibuffer-local-completion-map))
-#+END_SRC
-
-** elfeed mode
-#+BEGIN_SRC elisp
-  (use-package elfeed-org
-    :ensure t
-    :config
-    (global-set-key (kbd "C-x w") 'elfeed)
-    (elfeed-org)
-    :init
-    (setq rmh-elfeed-org-files (list "~/Org/william/rss.org")))
-#+END_SRC
-
-** emms mode
-#+BEGIN_SRC elisp
-  (use-package emms
-    :ensure t
-    :config
-    (require 'emms-setup)
-    (emms-all)
-    (emms-default-players)
-    :init
-    (setq emms-source-file-default-directory "~/Music/")
-    (setq emms-browser-covers #'emms-browser-cache-thumbnail-async)
-    (setq emms-browser-thumbnail-small-size 256)
-    (setq emms-browser-thumbnail-medium-size 256)
-    (setq emms-player-list '(emms-player-mplayer))
-    (setq emms-browser-default-cover (list "~/Org/william/images/mags.png" nil nil)))
 #+END_SRC
 
 * auto generated stuff

@@ -163,12 +163,17 @@ __pycache__
     fi
   fi
 
-  # other aliases
-  alias d=docker
-  alias dc=docker-compose
-
   # prompt
-  PS1="\W \[\033[33m\]λ \[\033[0m\]"
+  PS1="\W \[\033[31m\]λ \[\033[0m\]"
+
+  # aliases
+  alias d="docker"
+  alias dc="docker compose"
+  alias ll="ls -l"
+
+  # asdf
+  . "$HOME/.asdf/asdf.sh"
+  . "$HOME/.asdf/completions/asdf.bash"
 #+END_SRC
 
 ** .profile
@@ -201,30 +206,6 @@ __pycache__
       PATH="$HOME/.local/bin:$PATH"
   fi
 
-  # >>> JVM installed by coursier >>>
-  export JAVA_HOME="/home/william/.cache/coursier/arc/https/github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.18%252B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.18_10.tar.gz/jdk-11.0.18+10"
-  export PATH="/home/william/.cache/coursier/arc/https/github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.18%252B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.18_10.tar.gz/jdk-11.0.18+10/bin:$PATH"
-  # <<< JVM installed by coursier <<<
-
-  # pyenv
-  export PYENV_ROOT=$HOME/.pyenv
-  command -v pyenv >/dev/null || export PATH=$PATH:$PYENV_ROOT/bin
-  eval "$(pyenv init -)"
-
-  # golang
-  export GOPATH=~/Work/go
-  export PATH=$PATH:$GOPATH/bin
-  export PATH=$PATH:/usr/local/go/bin
-
-  # scala
-  export PATH=$PATH:/home/william/.local/share/coursier/bin
-
-  # elixir
-  export PATH=$PATH:~/.mix/escripts
-
-  # dart
-  export PATH=$PATH:~/.pub-cache/bin
-
-  # flutter
-  export PATH=$PATH:/usr/bin/flutter/bin
+  # snap
+  PATH="$PATH:/snap/bin"
 #+END_SRC
