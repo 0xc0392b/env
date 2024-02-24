@@ -3,7 +3,9 @@
 :END:
 
 #+TITLE: my emacs config
-#+PROPERTY: header-args :tangle ~/.emacs.d/init.el 
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
+
+To compile, use =org-babel-tangle=
 
 * initialisation
 ** package repositories
@@ -95,7 +97,7 @@ sources in =.bashrc= and not =.profile=.
 
 ** credentials
 #+BEGIN_SRC elisp
-  (setq auth-sources '("~/Org/william/.authinfo"))
+  (setq auth-sources '("~/Org/.authinfo"))
 #+END_SRC
 
 ** set encoding
@@ -185,7 +187,6 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 #+END_SRC
 
 ** set global font to inconsolata
-https://github.com/googlefonts/Inconsolata
 https://fonts.google.com/specimen/Inconsolata
 
 #+BEGIN_SRC elisp
@@ -210,8 +211,10 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (pixel-scroll-precision-mode t))
 #+END_SRC
 
-* packages
+* general packages and utilities
 ** treemacs
+https://github.com/Alexander-Miller/treemacs
+
 #+BEGIN_SRC elisp
   (use-package treemacs
     :ensure t
@@ -222,6 +225,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** telephone line
+https://github.com/dbordak/telephone-line
+
 #+BEGIN_SRC elisp
   (use-package telephone-line
     :ensure t
@@ -239,6 +244,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** git gutter
+https://github.com/emacsorphanage/git-gutter
+
 #+BEGIN_SRC elisp
   (use-package git-gutter
     :ensure t
@@ -247,6 +254,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** paren
+https://github.com/emacs-mirror/emacs/blob/master/lisp/paren.el
+
 #+BEGIN_SRC elisp
   (use-package paren
     :ensure t
@@ -255,23 +264,26 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** doom themes
-- dark
-  - doom-acario-dark
-  - doom-challenger-deep
-  - doom-horizon
-  - doom-manegarm
-  - doom-moonlight
-  - doom-nord
-  - doom-oceanic-next
-  - doom-outrun-electric
-  - doom-solarized-dark
-  - doom-sourcerer
-  - doom-tomorrow-night
-- light
-  - doom-nord-light
-  - doom-acario-light
-  - doom-solarized-light
-  - doom-tomorrow-day
+https://github.com/doomemacs/themes
+
+1. dark
+   - doom-acario-dark
+   - doom-challenger-deep
+   - doom-horizon
+   - doom-manegarm
+   - doom-moonlight
+   - doom-nord
+   - doom-oceanic-next
+   - doom-outrun-electric
+   - doom-solarized-dark
+   - doom-sourcerer
+   - doom-tomorrow-night
+
+2. light
+   - doom-nord-light
+   - doom-acario-light
+   - doom-solarized-light
+   - doom-tomorrow-day
 
 #+BEGIN_SRC elisp
   (use-package doom-themes
@@ -283,6 +295,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** vertico
+https://github.com/minad/vertico
+
 #+BEGIN_SRC elisp
   (use-package vertico
     :ensure t
@@ -291,6 +305,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** savehist
+https://github.com/emacs-mirror/emacs/blob/master/lisp/savehist.el
+
 #+BEGIN_SRC elisp
   (use-package savehist
     :ensure t
@@ -299,6 +315,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** marginalia
+https://github.com/minad/marginalia
+
 #+BEGIN_SRC elisp
   (use-package marginalia
     :after vertico
@@ -311,6 +329,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** flyspell
+https://www.emacswiki.org/emacs/FlySpell
+
 #+BEGIN_SRC elisp
   (use-package flyspell
     :ensure t
@@ -327,12 +347,16 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** ement
+https://github.com/alphapapa/ement.el
+
 #+BEGIN_SRC elisp
   (use-package ement
     :ensure t)
 #+END_SRC
 
 ** chatgpt-shell
+https://github.com/xenodium/chatgpt-shell
+
 #+BEGIN_SRC elisp
   (use-package chatgpt-shell
     :ensure t
@@ -341,7 +365,9 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
       (auth-source-pick-first-password :host "api.openai.com")))
 #+END_SRC
 
-** magit mode
+** magit
+https://github.com/magit/magit
+
 #+BEGIN_SRC elisp
   (use-package magit
     :ensure t
@@ -351,6 +377,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** org mode
+https://orgmode.org/
+
 #+BEGIN_SRC elisp
   (use-package org
     :ensure t
@@ -374,6 +402,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** org roam
+https://github.com/org-roam/org-roam
+
 #+BEGIN_SRC elisp
   (use-package org-roam
     :ensure t
@@ -383,7 +413,20 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (setq org-roam-directory "~/Org/william/notes"))
 #+END_SRC
 
+** ripgrep
+https://github.com/dajva/rg.el
+
+#+BEGIN_SRC elisp
+  (use-package rg
+    :ensure t
+    :config
+    (rg-enable-default-bindings))
+#+END_SRC
+
+* packages for programming languages and syntax highlighting
 ** go mode
+https://github.com/dominikh/go-mode.el
+
 #+BEGIN_SRC elisp
   (use-package go-mode
     :ensure t
@@ -392,6 +435,8 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 #+END_SRC
 
 ** elm mode
+https://github.com/jcollard/elm-mode
+
 #+BEGIN_SRC elisp
   (use-package elm-mode
     :ensure t
@@ -399,13 +444,25 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (add-hook 'elm-mode-hook (lambda () (add-hook 'before-save-hook 'elm-format-buffer))))
 #+END_SRC
 
+** react/jsx mode
+https://github.com/felipeochoa/rjsx-mode
+
+#+BEGIN_SRC elisp
+  (use-package rjsx-mode
+    :ensure t)
+#+END_SRC
+
 ** svelte mode
+https://github.com/leafOfTree/svelte-mode
+
 #+BEGIN_SRC elisp
   (use-package svelte-mode
     :ensure t)
 #+END_SRC
 
 ** elixir mode
+https://github.com/elixir-editors/emacs-elixir
+
 #+BEGIN_SRC elisp
   (use-package elixir-mode
     :ensure t
@@ -413,50 +470,28 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (add-hook 'elixir-mode-hook (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
 
-** scala mode
-#+BEGIN_SRC elisp
-  (use-package scala-mode
-    :ensure t
-    :interpreter
-    ("scala" . scala-mode))
-#+END_SRC
-
-** sbt mode
-#+BEGIN_SRC elisp
-  (use-package sbt-mode
-    :ensure t
-    :commands sbt-start sbt-command
-    :config
-    (substitute-key-definition
-     'minibuffer-complete-word
-     'self-insert-command
-     minibuffer-local-completion-map))
-#+END_SRC
-
 ** yaml mode
+https://github.com/yoshiki/yaml-mode
+
 #+BEGIN_SRC elisp
   (use-package yaml-mode
     :ensure t)
 #+END_SRC
 
 ** dockerfile mode
+https://github.com/spotify/dockerfile-mode
+
 #+BEGIN_SRC elisp
   (use-package dockerfile-mode
     :ensure t)
 #+END_SRC
 
 ** markdown mode
+https://github.com/jrblevin/markdown-mode
+
 #+BEGIN_SRC elisp
   (use-package markdown-mode
     :ensure t)
-#+END_SRC
-
-** ripgrep
-#+BEGIN_SRC elisp
-  (use-package rg
-    :ensure t
-    :config
-    (rg-enable-default-bindings))
 #+END_SRC
 
 * auto generated stuff
