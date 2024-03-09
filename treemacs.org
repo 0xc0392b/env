@@ -1,0 +1,11 @@
+:PROPERTIES:
+:STARTUP: showall
+:END:
+
+* default
+** org
+ - path :: ~/Org
+** work
+ - path :: ~/Work
+** wsantos.net
+ - path :: ~/wsantos.net
