@@ -170,6 +170,7 @@ __pycache__
   alias d="docker"
   alias dc="docker compose"
   alias ll="ls -l"
+  alias yt="youtube-dl -f 'bestvideo[ext=mp4][height<=1200]+bestaudio[ext=m4a]' -o '%(title)s'"
 
   # asdf
   . "$HOME/.asdf/asdf.sh"
