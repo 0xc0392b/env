@@ -283,7 +283,7 @@ https://github.com/doomemacs/themes
     :config
     (setq doom-themes-enable-bold t
 	  doom-themes-enable-italic t)
-    (load-theme 'doom-manegarm t))
+    (load-theme 'doom-outrun-electric t))
 #+END_SRC
 
 ** vertico
