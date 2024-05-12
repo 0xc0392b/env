@@ -5,7 +5,7 @@
 * default
 ** org
  - path :: ~/Org
-** work
- - path :: ~/Work
+** projects
+ - path :: ~/Projects
 ** wsantos.net
  - path :: ~/wsantos.net
