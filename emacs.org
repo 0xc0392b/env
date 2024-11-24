@@ -453,6 +453,15 @@ https://github.com/dominikh/go-mode.el
     (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
 #+END_SRC
 
+** rust mode
+https://github.com/rust-lang/rust-mode
+#+BEGIN_SRC elisp
+  (use-package rust-mode
+    :ensure t
+    :config
+    (add-hook 'rust-mode-hook (lambda () (add-hook 'before-save-hook rust-format-on-save))))
+#+END_SRC
+
 ** elm mode
 https://github.com/jcollard/elm-mode
 
