@@ -459,7 +459,7 @@ https://github.com/rust-lang/rust-mode
   (use-package rust-mode
     :ensure t
     :config
-    (add-hook 'rust-mode-hook (lambda () (add-hook 'before-save-hook rust-format-on-save))))
+    (add-hook 'rust-mode-hook (lambda () (add-hook 'before-save-hook 'rust-format-buffer))))
 #+END_SRC
 
 ** elm mode
