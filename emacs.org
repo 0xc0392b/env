@@ -442,7 +442,7 @@ https://github.com/dajva/rg.el
     (rg-enable-default-bindings))
 #+END_SRC
 
-* packages for programming languages and syntax highlighting
+* syntax highlighting
 ** go mode
 https://github.com/dominikh/go-mode.el
 
@@ -457,9 +457,7 @@ https://github.com/dominikh/go-mode.el
 https://github.com/rust-lang/rust-mode
 #+BEGIN_SRC elisp
   (use-package rust-mode
-    :ensure t
-    :config
-    (add-hook 'rust-mode-hook (lambda () (add-hook 'before-save-hook 'rust-format-buffer))))
+    :ensure t)
 #+END_SRC
 
 ** elm mode
