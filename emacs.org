@@ -211,7 +211,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
     (pixel-scroll-precision-mode t))
 #+END_SRC
 
-* general packages and utilities
+* utilities and ui packages
 ** treemacs
 https://github.com/Alexander-Miller/treemacs
 
@@ -454,7 +454,7 @@ https://github.com/dajva/rg.el
     (rg-enable-default-bindings))
 #+END_SRC
 
-* syntax highlighting
+* syntax highlighting and language modes
 ** go mode
 https://github.com/dominikh/go-mode.el
 
