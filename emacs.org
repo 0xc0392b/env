@@ -372,14 +372,6 @@ https://www.emacswiki.org/emacs/FlySpell
     (add-hook 'xml-mode-hook 'flyspell-mode))
 #+END_SRC
 
-** ement
-https://github.com/alphapapa/ement.el
-
-#+BEGIN_SRC elisp
-  (use-package ement
-    :ensure t)
-#+END_SRC
-
 ** chatgpt-shell
 https://github.com/xenodium/chatgpt-shell
 
