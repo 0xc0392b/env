@@ -97,7 +97,7 @@ sources in =.bashrc= and not =.profile=.
 
 ** credentials
 #+BEGIN_SRC elisp
-  (setq auth-sources '("~/Org/.authinfo"))
+  (setq auth-sources '("~/Org/.authinfo.gpg"))
 #+END_SRC
 
 ** set encoding
@@ -172,7 +172,7 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 (global-display-line-numbers-mode)
 #+END_SRC
 
-** hide toolbars and scrollbars
+** hide toolbars and scroll bars
 #+BEGIN_SRC elisp
   (menu-bar-mode 0)
   (tool-bar-mode 0)
@@ -190,10 +190,10 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 https://fonts.google.com/specimen/Inconsolata
 
 #+BEGIN_SRC elisp
-;  (set-frame-font "Inconsolata 12" nil t)
+;  (set-frame-font "Inconsolata-12" nil t)
 #+END_SRC
 
-** move point from window to window using meta + arrow keys
+** move cursor from window to window using meta + arrow keys
 #+BEGIN_SRC elisp
   (when (fboundp 'windmove-default-keybindings)
     (windmove-default-keybindings 'meta))
@@ -283,7 +283,16 @@ https://github.com/doomemacs/themes
     :config
     (setq doom-themes-enable-bold t
 	  doom-themes-enable-italic t)
-    (load-theme 'doom-outrun-electric t))
+    (load-theme 'doom-oceanic-next t))
+#+END_SRC
+
+** padding
+https://github.com/protesilaos/spacious-padding
+
+#+BEGIN_SRC elisp
+  (use-package spacious-padding
+    :ensure t
+    :hook (after-init . spacious-padding-mode))
 #+END_SRC
 
 ** vertico
@@ -380,6 +389,9 @@ https://github.com/xenodium/chatgpt-shell
   (use-package chatgpt-shell
     :ensure t
     :config
+    (setq chatgpt-shell-model-version "gpt-4")
+    (setq chatgpt-shell-model-temperature 1.0)
+    (setq chatgpt-shell-welcome-function nil)
     (setq chatgpt-shell-openai-key
       (auth-source-pick-first-password :host "api.openai.com")))
 #+END_SRC
@@ -457,7 +469,9 @@ https://github.com/dominikh/go-mode.el
 https://github.com/rust-lang/rust-mode
 #+BEGIN_SRC elisp
   (use-package rust-mode
-    :ensure t)
+    :ensure t
+    :config
+    (setq rust-format-on-save t))
 #+END_SRC
 
 ** elm mode
