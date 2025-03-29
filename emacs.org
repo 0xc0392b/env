@@ -46,7 +46,7 @@ sources in =.bashrc= and not =.profile=.
   (asdf-enable)
 #+END_SRC
 
-* key bindings
+* global key bindings
 ** toggle auto-complete with C-`
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-`") 'auto-complete-mode)
@@ -88,8 +88,8 @@ sources in =.bashrc= and not =.profile=.
   (global-set-key (kbd "s--") 'text-scale-decrease)
 #+END_SRC
 
-* configuration
-** about me
+* other global configuration
+** me
 #+BEGIN_SRC elisp
   (setq user-full-name     "William Santos"
 	user-mail-address  "w@wsantos.net")
@@ -186,13 +186,6 @@ https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
   (size-indication-mode t)
 #+END_SRC
 
-** set global font to inconsolata
-https://fonts.google.com/specimen/Inconsolata
-
-#+BEGIN_SRC elisp
-;  (set-frame-font "Inconsolata-12" nil t)
-#+END_SRC
-
 ** move cursor from window to window using meta + arrow keys
 #+BEGIN_SRC elisp
   (when (fboundp 'windmove-default-keybindings)
@@ -209,6 +202,11 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
 
   (when (fboundp 'pixel-scroll-precision-mode)
     (pixel-scroll-precision-mode t))
+#+END_SRC
+
+** always toggle-truncate-lines by default
+#+BEGIN_SRC elisp
+  (setq-default truncate-lines t)
 #+END_SRC
 
 * utilities and ui packages
