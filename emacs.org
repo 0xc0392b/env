@@ -2,7 +2,7 @@
 :STARTUP: showall
 :END:
 
-#+TITLE: my emacs config
+#+TITLE: william's emacs config
 #+PROPERTY: header-args :tangle ~/.emacs.d/init.el
 
 To compile, use =org-babel-tangle=
