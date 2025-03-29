@@ -9,5 +9,3 @@
  - path :: ~/Projects
 ** wsantos.net
  - path :: ~/wsantos.net
-** projects
- - path :: ~/Projects
