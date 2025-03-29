@@ -222,6 +222,16 @@ https://github.com/Alexander-Miller/treemacs
 	  treemacs-width 45))
 #+END_SRC
 
+** company mode
+https://github.com/company-mode/company-mode
+
+#+BEGIN_SRC elisp
+  (use-package company
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+
 ** doom mode-line
 https://github.com/seagle0128/doom-modeline?tab=readme-ov-file
 
@@ -320,14 +330,6 @@ https://github.com/domtronn/all-the-icons.el
   (use-package all-the-icons
     :ensure t
     :if (display-graphic-p))
-#+END_SRC
-
-** nerd icons
-https://github.com/emacsmirror/nerd-icons
-
-#+BEGIN_SRC elisp
-  (use-package nerd-icons
-    :ensure t)
 #+END_SRC
 
 ** savehist
