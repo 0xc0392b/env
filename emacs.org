@@ -79,7 +79,7 @@ sources in =.bashrc= and not =.profile=.
 
 ** kill current buffer
 #+BEGIN_SRC elisp
-  (global-set-key (kbd "s-k") 'kill-this-buffer)
+  (global-set-key (kbd "s-k") 'kill-current-buffer)
 #+END_SRC
 
 ** zoom in and out
@@ -455,6 +455,15 @@ https://github.com/dominikh/go-mode.el
     :ensure t
     :config
     (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
+#+END_SRC
+
+** gleam mode
+https://github.com/gleam-lang/gleam-mode
+
+#+BEGIN_SRC elisp
+  (use-package gleam-ts-mode
+    :ensure t
+    :mode (rx ".gleam" eos))
 #+END_SRC
 
 ** rust mode
