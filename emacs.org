@@ -108,6 +108,11 @@ sources in =.bashrc= and not =.profile=.
   (set-keyboard-coding-system 'utf-8)
 #+END_SRC
 
+** global font
+#+BEGIN_SRC elisp
+  (set-face-attribute 'default nil :font "Inconsolata")
+#+END_SRC
+
 ** automatically refresh buffers when files change on disk
 #+BEGIN_SRC elisp
   (global-auto-revert-mode t)
@@ -117,6 +122,17 @@ sources in =.bashrc= and not =.profile=.
 #+BEGIN_SRC elisp
   (setq calendar-week-start-day 1)
   (setq display-time-format "%a %d %b %I:%M%p")
+#+END_SRC
+
+** line width
+#+BEGIN_SRC elisp
+  (setq-default fill-column 100)
+#+END_SRC
+
+** right margin
+#+BEGIN_SRC elisp
+  (setopt display-fill-column-indicator-column 100)
+  (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 #+END_SRC
 
 ** warn when opening files > 100MB
@@ -219,7 +235,7 @@ https://github.com/Alexander-Miller/treemacs
     :init
     (global-set-key (kbd "C-\\") 'treemacs)
     (setq treemacs-user-mode-line-format " william's emacs "
-	  treemacs-width 45))
+    	treemacs-width 45))
 #+END_SRC
 
 ** company mode
@@ -229,7 +245,9 @@ https://github.com/company-mode/company-mode
   (use-package company
     :ensure t
     :init
-    (add-hook 'after-init-hook 'global-company-mode))
+    (add-hook 'after-init-hook 'global-company-mode)
+    :config
+    (define-key company-active-map (kbd "<tab>") 'company-complete))
 #+END_SRC
 
 ** doom mode-line
@@ -238,9 +256,10 @@ https://github.com/seagle0128/doom-modeline?tab=readme-ov-file
 #+BEGIN_SRC elisp
   (use-package doom-modeline
     :ensure t
+    :init
+    (doom-modeline-mode 1)
     :config
-    (setq doom-modeline-buffer-file-name-style 'file-name)
-    :init (doom-modeline-mode 1))
+    (setq doom-modeline-buffer-file-name-style 'file-name))
 #+END_SRC
 
 ** git gutter
