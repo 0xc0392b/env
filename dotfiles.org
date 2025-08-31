@@ -11,7 +11,7 @@
 	name = william santos
 	email = w@wsantos.net
 
-[url "git@github.com:"]
+[url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 
 [core]
