@@ -5,7 +5,13 @@
 * default
 ** org
  - path :: ~/Org
-** projects
- - path :: ~/Projects
 ** wsantos.net
- - path :: ~/wsantos.net
+ - path :: ~/Projects/wsantos.net
+** leapfrog learning
+ - path :: ~/Projects/leapfroglearning
+** trading machines
+ - path :: ~/Projects/tradingmachines
+** websites
+ - path :: ~/Projects/websites
+** data warehouse
+ - path :: ~/Projects/warehouse
