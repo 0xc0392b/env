@@ -400,8 +400,8 @@ https://github.com/xenodium/chatgpt-shell
   (use-package chatgpt-shell
     :ensure t
     :config
-    (setq chatgpt-shell-model-version "gpt-4")
-    (setq chatgpt-shell-model-temperature 1.0)
+    (setq chatgpt-shell-model-version "gpt-5.1")
+    (setq chatgpt-shell-model-temperature 1)
     (setq chatgpt-shell-welcome-function nil)
     (setq chatgpt-shell-openai-key
       (auth-source-pick-first-password :host "api.openai.com")))
