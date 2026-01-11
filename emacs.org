@@ -414,6 +414,13 @@ https://github.com/akermu/emacs-libvterm
   (use-package vterm :ensure t)
 #+END_SRC
 
+** projectile
+https://github.com/bbatsov/projectile
+
+#+BEGIN_SRC elisp
+  (use-package projectile :ensure t)
+#+END_SRC
+
 ** gemini cli
 https://github.com/linchen2chris/gemini-cli.el
 
@@ -427,7 +434,7 @@ https://github.com/linchen2chris/gemini-cli.el
     :config
     (setq gemini-cli-terminal-backend 'vterm)
     (gemini-cli-mode)
-    :bind-keymap ("C-c c" . gemini-cli-command-map))
+    :bind-keymap ("C-c g" . gemini-cli-command-map))
 #+END_SRC
 
 ** magit
