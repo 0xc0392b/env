@@ -7,13 +7,13 @@
  - path :: ~/Org
 ** wsantos.net
  - path :: ~/Projects/wsantos.net
-** leapfrog learning
+** leapfroglearning
  - path :: ~/Projects/leapfroglearning
-** trading machines
+** tradingmachines
  - path :: ~/Projects/tradingmachines
 ** websites
  - path :: ~/Projects/websites
-** data warehouse
+** warehouse
  - path :: ~/Projects/warehouse
 ** github
  - path :: ~/Projects/github
