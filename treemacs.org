@@ -15,3 +15,5 @@
  - path :: ~/Projects/websites
 ** data warehouse
  - path :: ~/Projects/warehouse
+** github
+ - path :: ~/Projects/github
