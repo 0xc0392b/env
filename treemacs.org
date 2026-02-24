@@ -15,5 +15,7 @@
  - path :: ~/Projects/websites
 ** warehouse
  - path :: ~/Projects/warehouse
+** experiments
+ - path :: ~/Projects/experiments
 ** github
  - path :: ~/Projects/github
