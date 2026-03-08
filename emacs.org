@@ -238,6 +238,19 @@ https://github.com/Alexander-Miller/treemacs
     	treemacs-width 45))
 #+END_SRC
 
+** centaur tabs
+https://github.com/ema2159/centaur-tabs
+
+#+BEGIN_SRC elisp
+  (use-package centaur-tabs
+    :demand
+    :config
+    (centaur-tabs-mode t)
+    :bind
+    ("C-<prior>" . centaur-tabs-backward)
+    ("C-<next>" . centaur-tabs-forward))
+#+END_SRC
+
 ** company mode
 https://github.com/company-mode/company-mode
 
@@ -285,32 +298,13 @@ https://github.com/emacs-mirror/emacs/blob/master/lisp/paren.el
 ** doom themes
 https://github.com/doomemacs/themes
 
-1. dark
-   - doom-acario-dark
-   - doom-challenger-deep
-   - doom-horizon
-   - doom-manegarm
-   - doom-moonlight
-   - doom-nord
-   - doom-oceanic-next
-   - doom-outrun-electric
-   - doom-solarized-dark
-   - doom-sourcerer
-   - doom-tomorrow-night
-
-2. light
-   - doom-nord-light
-   - doom-acario-light
-   - doom-solarized-light
-   - doom-tomorrow-day
-
 #+BEGIN_SRC elisp
   (use-package doom-themes
     :ensure t
     :config
     (setq doom-themes-enable-bold t
 	  doom-themes-enable-italic t)
-    (load-theme 'doom-oceanic-next t))
+    (load-theme 'doom-moonlight t))
 #+END_SRC
 
 ** padding
