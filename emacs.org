@@ -37,8 +37,8 @@ https://ianyepan.github.io/posts/setting-up-use-package/
 https://github.com/tabfugnic/asdf.el
 
 Makes sure emacs has the correct paths to asdf shims and
-bin. Otherwise cli tools (e.g. gofmt) will not work, as they are
-sources in =.bashrc= and not =.profile=.
+bin. Otherwise, cli tools (e.g. gofmt) will not work; they are sourced
+in =.bashrc= and not =.profile=.
 
 #+BEGIN_SRC elisp
   (add-to-list 'load-path "~/.emacs.d/asdf.el") 
@@ -46,7 +46,7 @@ sources in =.bashrc= and not =.profile=.
   (asdf-enable)
 #+END_SRC
 
-* global key bindings
+* key bindings
 ** toggle auto-complete with C-`
 #+BEGIN_SRC elisp
   (global-set-key (kbd "C-`") 'auto-complete-mode)
@@ -88,7 +88,7 @@ sources in =.bashrc= and not =.profile=.
   (global-set-key (kbd "s--") 'text-scale-decrease)
 #+END_SRC
 
-* other global configuration
+* global configuration
 ** me
 #+BEGIN_SRC elisp
   (setq user-full-name     "William Santos"
@@ -225,7 +225,7 @@ https://github.com/bbatsov/emacs.d/blob/master/init.el#L82
   (setq-default truncate-lines t)
 #+END_SRC
 
-* utilities and ui packages
+* third party plugins
 ** treemacs
 https://github.com/Alexander-Miller/treemacs
 
@@ -236,19 +236,6 @@ https://github.com/Alexander-Miller/treemacs
     (global-set-key (kbd "C-\\") 'treemacs)
     (setq treemacs-user-mode-line-format " william's emacs "
     	treemacs-width 45))
-#+END_SRC
-
-** centaur tabs
-https://github.com/ema2159/centaur-tabs
-
-#+BEGIN_SRC elisp
-  (use-package centaur-tabs
-    :demand
-    :config
-    (centaur-tabs-mode t)
-    :bind
-    ("C-<prior>" . centaur-tabs-backward)
-    ("C-<next>" . centaur-tabs-forward))
 #+END_SRC
 
 ** company mode
@@ -263,7 +250,19 @@ https://github.com/company-mode/company-mode
     (define-key company-active-map (kbd "<tab>") 'company-complete))
 #+END_SRC
 
-** doom mode-line
+** doom themes
+https://github.com/doomemacs/themes
+
+#+BEGIN_SRC elisp
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+	  doom-themes-enable-italic t)
+    (load-theme 'doom-solarized-light t))
+#+END_SRC
+
+** doom mode line
 https://github.com/seagle0128/doom-modeline?tab=readme-ov-file
 
 #+BEGIN_SRC elisp
@@ -283,28 +282,6 @@ https://github.com/emacsorphanage/git-gutter
     :ensure t
     :config
     (global-git-gutter-mode 1))
-#+END_SRC
-
-** paren
-https://github.com/emacs-mirror/emacs/blob/master/lisp/paren.el
-
-#+BEGIN_SRC elisp
-  (use-package paren
-    :ensure t
-    :config
-    (show-paren-mode +1))
-#+END_SRC
-
-** doom themes
-https://github.com/doomemacs/themes
-
-#+BEGIN_SRC elisp
-  (use-package doom-themes
-    :ensure t
-    :config
-    (setq doom-themes-enable-bold t
-	  doom-themes-enable-italic t)
-    (load-theme 'doom-moonlight t))
 #+END_SRC
 
 ** padding
@@ -387,48 +364,11 @@ https://www.emacswiki.org/emacs/FlySpell
     (add-hook 'xml-mode-hook 'flyspell-mode))
 #+END_SRC
 
-** chatgpt-shell
-https://github.com/xenodium/chatgpt-shell
-
-#+BEGIN_SRC elisp
-  (use-package chatgpt-shell
-    :ensure t
-    :config
-    (setq chatgpt-shell-model-version "gpt-5.1")
-    (setq chatgpt-shell-model-temperature 1)
-    (setq chatgpt-shell-welcome-function nil)
-    (setq chatgpt-shell-openai-key
-      (auth-source-pick-first-password :host "api.openai.com")))
-#+END_SRC
-
-** terminal emulator
-https://github.com/akermu/emacs-libvterm
-
-#+BEGIN_SRC elisp
-  (use-package vterm :ensure t)
-#+END_SRC
-
 ** projectile
 https://github.com/bbatsov/projectile
 
 #+BEGIN_SRC elisp
   (use-package projectile :ensure t)
-#+END_SRC
-
-** gemini cli
-https://github.com/linchen2chris/gemini-cli.el
-
-#+BEGIN_SRC elisp
-  ;; for slash commands popup
-  (use-package popup :ensure t)
-
-  ;; install gemini-cli.el
-  (use-package gemini-cli :ensure t
-    :vc (:url "https://github.com/linchen2chris/gemini-cli.el" :rev :newest)
-    :config
-    (setq gemini-cli-terminal-backend 'vterm)
-    (gemini-cli-mode)
-    :bind-keymap ("C-c g" . gemini-cli-command-map))
 #+END_SRC
 
 ** magit
@@ -467,28 +407,6 @@ https://orgmode.org/
     (global-set-key (kbd "C-c c") 'org-capture))
 #+END_SRC
 
-** org roam
-https://github.com/org-roam/org-roam
-
-#+BEGIN_SRC elisp
-  (use-package org-roam
-    :ensure t
-    :config
-    (org-roam-db-autosync-mode)
-    :init
-    (setq org-roam-directory "~/Org/william/notes"))
-#+END_SRC
-
-** ripgrep
-https://github.com/dajva/rg.el
-
-#+BEGIN_SRC elisp
-  (use-package rg
-    :ensure t
-    :config
-    (rg-enable-default-bindings))
-#+END_SRC
-
 * syntax highlighting and language modes
 ** go mode
 https://github.com/dominikh/go-mode.el
@@ -500,15 +418,6 @@ https://github.com/dominikh/go-mode.el
     (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save))))
 #+END_SRC
 
-** gleam mode
-https://github.com/gleam-lang/gleam-mode
-
-#+BEGIN_SRC elisp
-  (use-package gleam-ts-mode
-    :ensure t
-    :mode (rx ".gleam" eos))
-#+END_SRC
-
 ** rust mode
 https://github.com/rust-lang/rust-mode
 #+BEGIN_SRC elisp
@@ -516,16 +425,6 @@ https://github.com/rust-lang/rust-mode
     :ensure t
     :config
     (setq rust-format-on-save t))
-#+END_SRC
-
-** elm mode
-https://github.com/jcollard/elm-mode
-
-#+BEGIN_SRC elisp
-  (use-package elm-mode
-    :ensure t
-    :config
-    (add-hook 'elm-mode-hook (lambda () (add-hook 'before-save-hook 'elm-format-buffer))))
 #+END_SRC
 
 ** react/jsx mode
@@ -584,36 +483,4 @@ https://github.com/hcl-emacs/terraform-mode
 #+BEGIN_SRC elisp
   (use-package terraform-mode
     :ensure t)
-#+END_SRC
-
-* auto generated stuff
-** custom set variables
-#+BEGIN_SRC elisp
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(elfeed-search-date-format '("%d-%m-%Y %H-%M-%S" 20 :left))
-   '(elfeed-search-title-max-width 60)
-   '(elfeed-search-title-min-width 25)
-   '(elfeed-user-agent "william >:)")
-   '(git-gutter:added-sign "a")
-   '(git-gutter:deleted-sign "r")
-   '(git-gutter:modified-sign "m")
-   '(org-agenda-files nil)
-   '(package-selected-packages '())
-   '(scroll-down-aggressively nil))
-#+END_SRC
-
-** custom set faces
-#+BEGIN_SRC elisp
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
-  (put 'upcase-region 'disabled nil)
-  (put 'downcase-region 'disabled nil)
 #+END_SRC
