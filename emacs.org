@@ -129,12 +129,6 @@ in =.bashrc= and not =.profile=.
   (setq-default fill-column 100)
 #+END_SRC
 
-** right margin
-#+BEGIN_SRC elisp
-  (setopt display-fill-column-indicator-column 100)
-  (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-#+END_SRC
-
 ** warn when opening files > 100MB
 #+BEGIN_SRC elisp
   (setq large-file-warning-threshold 100000000)
