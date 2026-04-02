@@ -110,7 +110,7 @@ in =.bashrc= and not =.profile=.
 
 ** global font
 #+BEGIN_SRC elisp
-  (set-face-attribute 'default nil :font "Inconsolata")
+  (set-face-attribute 'default nil :font "Inconsolata" :height 140)
 #+END_SRC
 
 ** automatically refresh buffers when files change on disk
