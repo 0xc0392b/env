@@ -401,6 +401,22 @@ https://orgmode.org/
     (global-set-key (kbd "C-c c") 'org-capture))
 #+END_SRC
 
+** ellama
+https://github.com/s-kostyaev/ellama
+
+#+BEGIN_SRC elisp
+  (use-package ellama
+    :ensure t
+    :init
+    (require 'llm-openai)
+    (setq llm-warn-on-nonfree nil)
+    (setopt ellama-provider
+  	  (make-llm-openai-compatible
+  	   :url "https://ai.lab.lan/v1/"
+  	   :key "sk-bf-987442b9-98f4-4331-b351-3b0cbbf88f26"
+  	   :chat-model "qwen2.5-coder:latest")))
+#+END_SRC
+
 * syntax highlighting and language modes
 ** go mode
 https://github.com/dominikh/go-mode.el
