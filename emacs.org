@@ -41,7 +41,7 @@ bin. Otherwise, cli tools (e.g. gofmt) will not work; they are sourced
 in =.bashrc= and not =.profile=.
 
 #+BEGIN_SRC elisp
-  (add-to-list 'load-path "~/.emacs.d/asdf.el") 
+  (add-to-list 'load-path "~/.emacs.d/asdf") 
   (require 'asdf)
   (asdf-enable)
 #+END_SRC
@@ -111,7 +111,7 @@ in =.bashrc= and not =.profile=.
 ** global font
 #+BEGIN_SRC elisp
   (set-face-attribute 'default nil :font "Inconsolata" :height 140)
-#+END_SRC
+#+End_SRC
 
 ** automatically refresh buffers when files change on disk
 #+BEGIN_SRC elisp
