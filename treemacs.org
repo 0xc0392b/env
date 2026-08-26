@@ -1,21 +1,12 @@
-:PROPERTIES:
-:STARTUP: showall
-:END:
+#+TITLE: Edit Treemacs Workspaces & Projects
+# Call ~treemacs-finish-edit~ or press ~C-c C-c~ when done.
+# [[https://github.com/Alexander-Miller/treemacs#conveniently-editing-your-projects-and-workspaces][Click here for detailed documentation.]]
+# To cancel you can simply kill this buffer.
 
 * default
-** org
- - path :: ~/Org
-** wsantos.net
- - path :: ~/Projects/wsantos.net
-** leapfroglearning
- - path :: ~/Projects/leapfroglearning
-** tradingmachines
- - path :: ~/Projects/tradingmachines
-** websites
- - path :: ~/Projects/websites
-** warehouse
- - path :: ~/Projects/warehouse
-** experiments
- - path :: ~/Projects/experiments
-** github
- - path :: ~/Projects/github
+** 📖 notes
+ - path :: ~/Notes
+** 🚀 projects
+ - path :: ~/Projects
+** ⚡ lab
+ - path :: ~/Lab
