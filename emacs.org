@@ -41,7 +41,7 @@ bin. Otherwise, cli tools (e.g. gofmt) will not work; they are sourced
 in =.bashrc= and not =.profile=.
 
 #+BEGIN_SRC elisp
-  (add-to-list 'load-path "~/.emacs.d/asdf.el") 
+  (add-to-list 'load-path "~/.emacs.d/asdf/")
   (require 'asdf)
   (asdf-enable)
 #+END_SRC
@@ -228,8 +228,11 @@ https://github.com/Alexander-Miller/treemacs
     :ensure t
     :init
     (global-set-key (kbd "C-\\") 'treemacs)
-    (setq treemacs-user-mode-line-format " william's emacs "
-    	treemacs-width 45))
+    (setq treemacs-user-mode-line-format '(:eval (propertize " 🧿 william's emacs " 'display '(raise 0.1))))
+    :config
+    (treemacs-modify-theme (treemacs-current-theme) :config (progn (treemacs-create-icon :icon "" :extensions (root-closed root-open) :fallback 'same-as-icon)))
+    :hook
+    (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
 #+END_SRC
 
 ** company mode
@@ -256,7 +259,7 @@ https://github.com/doomemacs/themes
     (load-theme 'doom-solarized-light t))
 #+END_SRC
 
-** doom mode line
+** doom modeline
 https://github.com/seagle0128/doom-modeline?tab=readme-ov-file
 
 #+BEGIN_SRC elisp
@@ -284,6 +287,16 @@ https://github.com/protesilaos/spacious-padding
 #+BEGIN_SRC elisp
   (use-package spacious-padding
     :ensure t
+    :custom
+    (spacious-padding-widths
+     '(:internal-border-width 16
+       :header-line-width 0
+       :mode-line-width 8
+       :custom-button-width 4
+       :tab-width 4
+       :right-divider-width 0
+       :scroll-bar-width 0
+       :fringe-width 0))
     :hook (after-init . spacious-padding-mode))
 #+END_SRC
 
@@ -492,7 +505,99 @@ https://github.com/jrblevin/markdown-mode
 
 #+BEGIN_SRC elisp
   (use-package markdown-mode
-    :ensure t)
+    :ensure t
+    :custom
+    (markdown-hide-markup t)
+    (markdown-display-remote-images t)
+    :bind
+    (:map markdown-mode-map
+  	("C-c C-v i" . markdown-paste-image))
+    :config
+    (defun markdown-paste-image ()
+      "Paste an image from Wayland clipboard into current directory using `wl-paste`."
+      (interactive)
+      (unless (buffer-file-name)
+        (user-error "Buffer must be visiting a file to determine the save directory"))
+      (let* ((buffer-dir (file-name-directory (buffer-file-name)))
+             (time-stamp (format-time-string "%Y%m%d_%H%M%S"))
+             (filename (read-string "Image filename: " (format "image_%s.png" time-stamp)))
+             (filepath (expand-file-name filename buffer-dir))
+             (cmd (format "wl-paste --type image/png > %s" (shell-quote-argument filepath)))
+             (exit-code (call-process-shell-command cmd)))
+        (if (and (zerop exit-code) (file-exists-p filepath) (> (file-attribute-size (file-attributes filepath)) 0))
+            (progn
+              (insert (format "![%s](./%s)" (file-name-base filename) filename))
+              (when (fboundp 'markdown-display-inline-images)
+                (markdown-display-inline-images))
+              (message "Saved and inserted image: %s" filename))
+  	(when (file-exists-p filepath) (delete-file filepath))
+  	(user-error "No image content found in Wayland clipboard"))))
+    
+    (defvar-local markdown--last-line nil
+      "Tracks the line number where the cursor currently resides.")
+
+    (defun markdown--line-bounds (line-num)
+      "Return (beg . end) character positions for LINE-NUM, or nil if invalid."
+      (when (and line-num (> line-num 0))
+        (save-excursion
+          (save-match-data
+            (goto-char (point-min))
+            (when (zerop (forward-line (1- line-num)))
+              (cons (line-beginning-position) (line-end-position)))))))
+
+    (defun markdown--unhide-current-line-matcher (limit)
+      "Font-lock matcher that strips hiding properties on the cursor's line."
+      (when markdown--last-line
+        (let ((bounds (markdown--line-bounds markdown--last-line))
+              (start (point)))
+          (when bounds
+            (let ((c-beg (car bounds))
+                  (c-end (cdr bounds)))
+              ;; Check if scanning region [start, limit] overlaps the cursor line [c-beg, c-end]
+              (when (and (< start c-end) (> limit c-beg))
+                (with-silent-modifications
+                  (remove-text-properties (max start c-beg)
+  					(min limit c-end)
+  					'(display nil invisible nil composition nil))))))))
+      (goto-char limit)
+      nil)
+
+    (defun markdown--update-cursor-line ()
+      "Refontify old and new lines safely when the cursor moves between lines."
+      (when (derived-mode-p 'markdown-mode)
+        (let ((cur-line (line-number-at-pos)))
+          (unless (eq cur-line markdown--last-line)
+            (let ((old-line markdown--last-line))
+              (setq markdown--last-line cur-line)
+              ;; save-excursion and save-match-data prevent the cursor from jumping
+              (save-excursion
+                (save-match-data
+                  ;; Re-fontify old line to re-hide its markup
+                  (when old-line
+                    (let ((old-bounds (markdown--line-bounds old-line)))
+                      (when old-bounds
+                        (font-lock-fontify-region (car old-bounds) (cdr old-bounds)))))
+                  ;; Fontify new line to reveal its markup
+                  (let ((new-bounds (markdown--line-bounds cur-line)))
+                    (when new-bounds
+                      (font-lock-fontify-region (car new-bounds) (cdr new-bounds)))))))))))
+
+    (add-hook 'markdown-mode-hook
+              (lambda ()
+                (setq markdown--last-line (line-number-at-pos))
+                (font-lock-add-keywords
+                 nil
+                 '((markdown--unhide-current-line-matcher 0 nil))
+                 'append)
+                (add-hook 'post-command-hook #'markdown--update-cursor-line nil t)
+                (markdown-display-inline-images)))
+
+    (set-face-attribute 'markdown-header-face-1 nil :height 2.0 :weight 'bold)
+    (set-face-attribute 'markdown-header-face-2 nil :height 1.8 :weight 'bold)
+    (set-face-attribute 'markdown-header-face-3 nil :height 1.6 :weight 'bold)
+    (set-face-attribute 'markdown-header-face-4 nil :height 1.4 :weight 'bold)
+    (set-face-attribute 'markdown-header-face-5 nil :height 1.2 :weight 'bold)
+    (set-face-attribute 'markdown-header-face-6 nil :height 1.0 :weight 'bold))
 #+END_SRC
 
 ** terraform mode
