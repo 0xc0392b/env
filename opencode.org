@@ -14,28 +14,23 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Lab",
       "options": {
-        "apiKey": "sk-bf-3ce98ba1-e6f5-43e6-bffb-a9134663fcad",
         "baseURL": "https://ai.lab.lan/v1"
       },
       "models": {
-	"ollama/qwen2.5-coder:latest": {
-          "name": "Qwen 2.5"
-        },
-	"ollama/rnj-1:8b": {
-          "name": "rnj"
-        },
-        "gemini/gemini-3-pro-preview": {
-          "name": "Gemini 3"
+        "gemini/gemini-3.5-flash": {
+          "name": "Gemini 3.5 flash"
 	},
-        "gemini/gemini-3.1-pro-preview": {
-          "name": "Gemini 3.1"
+        "gemini/gemini-3.5-flash-flex": {
+          "name": "Gemini 3.5 flash FLEX"
 	},
-        "gemini/gemini-3-flash-preview": {
-          "name": "Gemini 3 flash"
+        "gemini/gemini-3.7-flash": {
+          "name": "Gemini 3.7 flash"
+	},
+        "gemini/gemini-3.7-flash-flex": {
+          "name": "Gemini 3.7 flash FLEX"
 	}
       }
     }
   }
 }
-
 #+END_SRC
