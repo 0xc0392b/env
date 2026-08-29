@@ -46,6 +46,34 @@ in =.bashrc= and not =.profile=.
   (asdf-enable)
 #+END_SRC
 
+* custom functions
+
+** create new note
+#+BEGIN_SRC elisp
+  (defun quick-inbox-note (filename)
+    "Create a new note in ~/Notes/00-inbox/ with a default YYYY-MM-DD.md name."
+    (interactive
+     (let* ((inbox-dir (expand-file-name "~/Notes/00-inbox/"))
+            (today-str (format-time-string "%Y-%m-%d"))
+            (default-filename (concat today-str ".md")))
+       ;; Ensure the inbox directory exists
+       (unless (file-exists-p inbox-dir)
+         (make-directory inbox-dir t))
+       (list (read-file-name "New inbox note: "
+                             inbox-dir
+                             default-filename
+                             nil
+                             default-filename))))
+    (let ((file-path (expand-file-name filename "~/Notes/00-inbox/")))
+      (find-file file-path)
+      ;; Populate new/empty files with basic YAML metadata frontmatter
+      (when (= (buffer-size) 0)
+        (insert (format "---\ntitle: %s\ndate: %s\ntags: []\n---\n\n"
+                        (file-name-base file-path)
+                        (format-time-string "%Y-%m-%d")))
+        (goto-char (point-max)))))
+#+END_SRC
+
 * key bindings
 ** toggle auto-complete with C-`
 #+BEGIN_SRC elisp
@@ -88,6 +116,11 @@ in =.bashrc= and not =.profile=.
   (global-set-key (kbd "s--") 'text-scale-decrease)
 #+END_SRC
 
+** create new note in inbox
+#+BEGIN_SRC elisp
+  (global-set-key (kbd "C-n") #'quick-inbox-note)
+#+END_SRC
+
 * global configuration
 ** me
 #+BEGIN_SRC elisp
@@ -97,7 +130,7 @@ in =.bashrc= and not =.profile=.
 
 ** credentials
 #+BEGIN_SRC elisp
-  (setq auth-sources '("~/Org/.authinfo.gpg"))
+  (setq auth-sources '("~/.emacs.d/.authinfo.gpg"))
 #+END_SRC
 
 ** set encoding
