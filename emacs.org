@@ -459,8 +459,8 @@ https://github.com/s-kostyaev/ellama
     (setopt ellama-provider
   	  (make-llm-openai-compatible
   	   :url "https://ai.lab.lan/v1/"
-  	   :key "sk-bf-987442b9-98f4-4331-b351-3b0cbbf88f26"
-  	   :chat-model "qwen2.5-coder:latest")))
+  	   :key "sk-gB7Ne-7KnOiOpgXEHEz32Q"
+  	   :chat-model "gemini/gemini-3.7-flash")))
 #+END_SRC
 
 * syntax highlighting and language modes
