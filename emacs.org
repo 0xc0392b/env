@@ -287,8 +287,23 @@ https://github.com/doomemacs/themes
   (use-package doom-themes
     :ensure t
     :config
+    (defvar light-theme 'doom-solarized-light)
+    (defvar dark-theme 'doom-solarized-dark)
+
+    (defun my/toggle-doom-theme ()
+      "Toggle between light and dark themes."
+      (interactive)
+      (let ((target-theme (if (eq (car custom-enabled-themes) light-theme)
+                              dark-theme
+                            light-theme)))
+        (mapc #'disable-theme custom-enabled-themes)
+        (load-theme target-theme t)
+        (message "Switched to %s" target-theme)))
+
+    (global-set-key (kbd "<f5>") #'my/toggle-doom-theme)
     (setq doom-themes-enable-bold t
-	  doom-themes-enable-italic t)
+    	doom-themes-enable-italic t)
+
     (load-theme 'doom-solarized-light t))
 #+END_SRC
 
